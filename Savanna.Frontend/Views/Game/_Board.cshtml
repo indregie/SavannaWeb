@@ -1,6 +1,9 @@
-﻿
+﻿@using Savanna.Backend
+@using Savanna.Frontend
+@using Savanna.Backend.Actors
+
 @{
-    List<Animal> animals = ((UIManager)ViewData["UIManager"]).GetBoardAnimals();
+    List<Animal> animals = ((UIManager)ViewData["UIManager"]).GetBoardAnimals().ToList();
     char[,] board = new char[Constants.MaxY, Constants.MaxX];
 
     foreach (var animal in animals)
@@ -12,7 +15,9 @@
     {
         for (int j = 0; j < Constants.MaxX; j++)
         {
-            @Html.Raw(board[i, j]);
+            @Html.Raw(board[i, j])
+            ;
         }
+        <text><br /></text>
     }
 }
