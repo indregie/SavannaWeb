@@ -1,0 +1,25 @@
+﻿@using Savanna.Backend
+@using Savanna.Frontend
+
+@{
+    ViewBag.Title = "Savanna Game";
+}
+
+<h2>Welcome to Savanna!</h2>
+<p>Loaded animals:</p>
+@foreach (var kvp in AnimalFactory.AnimalTypes)
+{
+    <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
+}
+
+<div>
+    <form method="post" action="@Url.Action("HandleInput", "Game")">
+        <input type="text" name="animalSymbol" />
+        <input type="submit" value="Add animal" />
+    </form>
+</div>
+
+<div>
+    <h3>Game board:</h3>
+    @Html.Partial("_Board", new ViewDataDictionary { { "UIManager", new UIManager(new BoardManager()) } })
+</div>

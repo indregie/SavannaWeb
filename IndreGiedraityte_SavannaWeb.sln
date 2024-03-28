@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Savanna.Backend", "Savanna.Backend\Savanna.Backend.csproj", "{A300A05D-364D-4F5E-BB68-D7C4369B09C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Savanna.Frontend", "Savanna.Frontend\Savanna.Frontend.csproj", "{9C5A0006-CB6E-49EA-A26C-C98163B2DA62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Savanna.AntelopePlugin", "Savanna.AntelopePlugin\Savanna.AntelopePlugin.csproj", "{E40F6CFC-1DE7-419D-BCFA-32349BDDC811}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Savanna.LionPlugin", "Savanna.LionPlugin\Savanna.LionPlugin.csproj", "{C02AE9E5-E66A-4A89-BFE3-94729B10155F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A300A05D-364D-4F5E-BB68-D7C4369B09C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A300A05D-364D-4F5E-BB68-D7C4369B09C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A300A05D-364D-4F5E-BB68-D7C4369B09C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A300A05D-364D-4F5E-BB68-D7C4369B09C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5A0006-CB6E-49EA-A26C-C98163B2DA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5A0006-CB6E-49EA-A26C-C98163B2DA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5A0006-CB6E-49EA-A26C-C98163B2DA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5A0006-CB6E-49EA-A26C-C98163B2DA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E40F6CFC-1DE7-419D-BCFA-32349BDDC811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E40F6CFC-1DE7-419D-BCFA-32349BDDC811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E40F6CFC-1DE7-419D-BCFA-32349BDDC811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E40F6CFC-1DE7-419D-BCFA-32349BDDC811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C02AE9E5-E66A-4A89-BFE3-94729B10155F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C02AE9E5-E66A-4A89-BFE3-94729B10155F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C02AE9E5-E66A-4A89-BFE3-94729B10155F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C02AE9E5-E66A-4A89-BFE3-94729B10155F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA998DE7-5D85-409C-86FE-3288A003FEB4}
+	EndGlobalSection
+EndGlobal
