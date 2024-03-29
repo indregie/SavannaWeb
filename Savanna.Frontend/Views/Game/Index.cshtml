@@ -23,3 +23,29 @@
     <h3>Game board:</h3>
     @await Html.PartialAsync("_Board", ViewData["UIManager"] as Savanna.Frontend.UIManager)
 </div>
+
+<script>
+    function updateBoard() {
+        $.ajax({
+            url: 'Game/GetBoard',
+            type: 'GET',
+            success: function (data) {
+                //update game board display with the received data
+            }
+        });
+    }
+
+    $(document).keypress(function (event) {
+        var keyChar = String.fromCharCode(event.which).toUpperCase();
+        $.ajax({
+            url: 'Game/AddAnimal',
+            type: 'POST',
+            data: { animalSymbol: keyChar },
+            success: function () {
+                //optional, additional actions
+            }
+        })
+    });
+
+    setInterval(updateBoard, 1000);
+</script>
