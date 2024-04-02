@@ -10,6 +10,7 @@
 @foreach (var kvp in AnimalFactory.AnimalTypes)
 {
     <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
+
 }
 
 <div>
@@ -20,7 +21,7 @@
 </div>
 
 <div>
-    <h3>Game board:</h3>
+    <h3>Game board:</h3> @*render partial view*@
     @await Html.PartialAsync("_Board", ViewData["UIManager"] as Savanna.Frontend.UIManager)
 </div>
 
