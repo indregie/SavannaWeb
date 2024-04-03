@@ -19,6 +19,7 @@ public class GameController : Controller
         return View();
     }
 
+    //invoked from view, adds animal to board and redirects to view
     [HttpPost]
     public IActionResult HandleInput(char animalSymbol)
     {

@@ -12,8 +12,24 @@ public class UIManager
         _boardManager = boardManager;
     }
 
-    public IEnumerable<Animal> GetBoardAnimals()
+    public char[,] GetGameBoard()
     {
-        return _boardManager.GetBoardAnimals();
+        List<Animal> animals = _boardManager.GetBoardAnimals();
+        char[,] board = new char[Constants.MaxY, Constants.MaxX];
+
+        for (int i = 0; i < Constants.MaxY;  i++)
+        {
+            for (int j = 0; j < Constants.MaxX; j++)
+            {
+                board[i, j] = '-';
+            }
+        }
+
+        foreach (var animal in animals)
+        {
+            board[animal.Position.Y, animal.Position.X] = animal.Symbol;
+        }
+
+        return board;
     }
 }

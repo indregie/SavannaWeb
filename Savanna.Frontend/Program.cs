@@ -1,7 +1,13 @@
+using Savanna.Backend;
+using Savanna.Frontend;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<BoardManager>();
+builder.Services.AddSingleton<UIManager>();
 
 var app = builder.Build();
 
