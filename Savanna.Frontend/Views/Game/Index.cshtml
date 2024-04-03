@@ -44,10 +44,13 @@
 <script>
     function updateBoard() {
         $.ajax({
-            url: 'Game/GetBoard',
+            url: '@Url.Action("GetGameBoard", "Game")',
             type: 'GET',
             success: function (data) {
-                //update game board display with the received data
+                $('#game-board').html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
             }
         });
     }

@@ -31,4 +31,11 @@ public class GameController : Controller
 
         return RedirectToAction("Index");   
     }
+
+    [HttpGet]
+    public IActionResult GetGameBoard()
+    {
+        var board = _uiManager.GetGameBoard();
+        return Json(board);
+    }
 }
