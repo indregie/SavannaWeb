@@ -18,8 +18,8 @@
 
 @* posts input to controller HandleInput action *@
 <div>
-    <form method="post" action="@Url.Action("HandleInput", "Game")">
-        <input type="text" name="animalSymbol" maxlength="1" />
+    <form id="animalForm" method="post" action="@Url.Action("HandleInput", "Game")">
+        <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
         <input type="submit" value="Add animal" />
     </form>
 </div>
@@ -27,13 +27,13 @@
 <div id="game-board">
     <table>
         <caption>Game board:</caption> 
-        <tbody>
+        <tbody id="boardBody">
                 @for (int i = 0; i < Constants.MaxY; i++)
                 {
                     <tr>
                         @for (int j = 0; j < Constants.MaxX; j++)
                         {
-                            <td>@board[i, j]</td>
+                            <td id="cell-@i-@j">@board[i, j]</td>
                         }
                     </tr>
                 }
@@ -43,28 +43,39 @@
 
 <script>
     function updateBoard() {
-        $.ajax({
-            url: '@Url.Action("GetGameBoard", "Game")',
-            type: 'GET',
-            success: function (data) {
-                $('#game-board').html(data);
-            },
-            error: function (xhr, status, error) {
+        fetch('@Url.Action("GetGameBoard", "Game")')
+            .then(response => {
+                if (!response.ok {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('boardBody').innerHTML = data;
+            })
+            .catch(error => {
                 console.error(error);
-            }
-        });
+            });
     }
 
-    $(document).keypress(function (event) {
-        var keyChar = String.fromCharCode(event.which).toUpperCase();
-        $.ajax({
-            url: 'Game/AddAnimal',
-            type: 'POST',
-            data: { animalSymbol: keyChar },
-            success: function () {
-                //optional, additional actions
-            }
+    document.getElementById('animalForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var animalSymbol = document.getElementById('animalSymbol').value.toUpperCase();
+        fetch('Game/AddAnimal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ animalSymbol: animalSymbol })
         })
+            .then(response => {
+                if (!response.ok {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     });
 
     setInterval(updateBoard, 1000);

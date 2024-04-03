@@ -29,7 +29,7 @@ public class GameController : Controller
             _boardManager.AddAnimal(animalType);
         }
 
-        return RedirectToAction("Index");   
+        return RedirectToAction(nameof(Index));   
     }
 
     [HttpGet]
