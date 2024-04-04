@@ -42,10 +42,11 @@
 </div>
 
 <script>
+
     function updateBoard() {
         fetch('@Url.Action("GetGameBoard", "Game")')
             .then(response => {
-                if (!response.ok {
+                if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.text();
@@ -60,6 +61,7 @@
 
     document.getElementById('animalForm').addEventListener('submit', function (event) {
         event.preventDefault();
+        console.log("listener alive");
         var animalSymbol = document.getElementById('animalSymbol').value.toUpperCase();
         fetch('Game/AddAnimal', {
             method: 'POST',
@@ -69,7 +71,8 @@
             body: JSON.stringify({ animalSymbol: animalSymbol })
         })
             .then(response => {
-                if (!response.ok {
+                console.log("response fetched");
+                if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
             })
