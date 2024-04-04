@@ -42,33 +42,26 @@
 
 <script>
 
-    function updateBoard() {
-        fetch('@Url.Action("GetGameBoard", "Game")')
-            .then(response => {
-                console.log("update fetched");
-                console.log(response);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const boardBody = document.getElementById('boardBody');
-                boardBody.innerHTML = '';
-                data.forEach((row, i) => {
-                    const tr = document.createElement('tr');;
-                    row.forEach((cell, j) => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
-                        console.log(cell);
-                    });
-                    boardBody.appendChild(tr);
-                });
-            })
-            .catch(error => {
-                console.error(error);
+    const updateBoard = async () => {
+
+        const response = await fetch('@Url.Action("GetGameBoard", "Game")');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log("responseData", data);
+        const boardBody = document.getElementById('boardBody');
+        boardBody.innerHTML = '';
+        data.forEach((row, i) => {
+            const tr = document.createElement('tr');;
+            row.forEach((cell, j) => {
+                const td = document.createElement('td');
+                td.textContent = cell;
+                tr.appendChild(td);
+                console.log(cell);
             });
+            boardBody.appendChild(tr);
+        });
     }
 
     document.getElementById('addAnimalButton').addEventListener('click', function (event) {
