@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Savanna Game";
     UIManager uiManager = ViewData["UIManager"] as UIManager;
-    char[,] board = uiManager.GetGameBoard();
+    List<List<char>> board = uiManager.GetGameBoard();
 }
 
 <h2>Welcome to Savanna!</h2>
@@ -17,12 +17,11 @@
 }
 
 @* posts input to controller HandleInput action *@
-<div>
-    <form id="animalForm" method="post" action="@Url.Action("HandleInput", "Game")">
-        <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
-        <input type="submit" value="Add animal" />
-    </form>
-</div>
+
+<form id="animalForm">
+    <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
+    <input id="addAnimalButton" type="submit" value="Add animal" />
+</form>
 
 <div id="game-board">
     <table>
@@ -33,7 +32,7 @@
                     <tr>
                         @for (int j = 0; j < Constants.MaxX; j++)
                         {
-                            <td id="cell-@i-@j">@board[i, j]</td>
+                            <td id="cell-@i-@j">@board[i][j]</td>
                         }
                     </tr>
                 }
@@ -49,21 +48,31 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json();
             })
             .then(data => {
-                document.getElementById('boardBody').innerHTML = data;
+                const boardBody = document.getElementById('boardBody');
+                boardBody.innerHTML = '';
+                data.forEach((row, i) => {
+                    const tr = document.createElement('tr');;
+                    row.forEach((cell, j) => {
+                        const td = document.createElement('td');
+                        td.textContent = cell;
+                        tr.appendChild(td);
+                    });
+                    boardBody.appendChild(tr);
+                });
             })
             .catch(error => {
                 console.error(error);
             });
     }
 
-    document.getElementById('animalForm').addEventListener('submit', function (event) {
+    document.getElementById('addAnimalButton').addEventListener('click', function (event) {
         event.preventDefault();
         console.log("listener alive");
         var animalSymbol = document.getElementById('animalSymbol').value.toUpperCase();
-        fetch('Game/AddAnimal', {
+        fetch('@Url.Action("HandleInput", "Game")', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
