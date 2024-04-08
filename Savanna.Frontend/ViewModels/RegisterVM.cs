@@ -13,7 +13,8 @@ public class RegisterVM
     [DataType(DataType.Password)]
     public string? Password { get; set; }
     [Compare("Password", ErrorMessage ="Passwords don't match.")]
+    [Display(Name="Confirm password")]
     public string? ConfirmPassword { get; set; }
+    [DataType(DataType.MultilineText)]
     public string? Address { get; set; }
-
 }

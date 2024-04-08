@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Savanna.Backend;
 using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
+[Authorize]
 public class GameController : Controller
 {
     private readonly BoardManager _boardManager;
