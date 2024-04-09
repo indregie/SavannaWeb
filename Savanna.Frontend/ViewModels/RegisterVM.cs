@@ -12,6 +12,7 @@ public class RegisterVM
     [Required]
     [DataType(DataType.Password)]
     public string? Password { get; set; }
+    [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage ="Passwords don't match.")]
     [Display(Name="Confirm password")]
     public string? ConfirmPassword { get; set; }

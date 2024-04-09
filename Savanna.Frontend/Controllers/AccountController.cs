@@ -76,6 +76,6 @@ public class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
-        return RedirectToAction(nameof(GameController.Index));
+        return RedirectToAction("Login","Account");
     }
 }
