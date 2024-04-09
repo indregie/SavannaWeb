@@ -16,14 +16,16 @@ public class AccountController : Controller
         _userManager = userManager;
 
     }
-    public IActionResult Login()
+    public IActionResult Login(string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginVM model)
+    public async Task<IActionResult> Login(LoginVM model, string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         if (!ModelState.IsValid)
         {
             return View(model);
@@ -33,20 +35,22 @@ public class AccountController : Controller
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Index", "Game");
+            return RedirectToLocal(returnUrl);
         }
         ModelState.AddModelError("", "Invalid login attempt.");
         return View(model);
     }
 
-    public IActionResult Register()
+    public IActionResult Register(string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterVM model)
+    public async Task<IActionResult> Register(RegisterVM model, string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         if (ModelState.IsValid)
         {
             AppUser user = new()
@@ -62,7 +66,7 @@ public class AccountController : Controller
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Game");
+                return RedirectToLocal(returnUrl);
             }
 
             foreach (var error in result.Errors)
@@ -70,12 +74,19 @@ public class AccountController : Controller
                 ModelState.AddModelError("", error.Description);
             }
         }
-        return View();
+        return View(model);
     }
 
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Login","Account");
+    }
+
+    private IActionResult RedirectToLocal(string? returnUrl)
+    {
+        return !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)
+            ? Redirect(returnUrl)
+            : RedirectToAction(nameof(GameController.Index), nameof(GameController));
     }
 }
