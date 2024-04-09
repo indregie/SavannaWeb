@@ -1,9 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity;
-@using Savanna.Frontend.Models;
+﻿@using Microsoft.AspNetCore.Identity
+@using Savanna.Frontend.Models
 @inject SignInManager<AppUser> _signInManager
 
 <ul class="navbar-nav">
-    @if (_signInManager.isSignedIn(User))
+    @if (_signInManager.IsSignedIn(User))
     {
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

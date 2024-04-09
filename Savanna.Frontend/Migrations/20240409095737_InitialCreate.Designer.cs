@@ -12,8 +12,8 @@ using Savanna.Frontend.Data;
 namespace Savanna.Frontend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240405142618_Initial")]
-    partial class Initial
+    [Migration("20240409095737_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
