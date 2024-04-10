@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Savanna.Backend;
+using Savanna.Backend.Interfaces;
+using Savanna.Frontend.Interfaces;
 using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
@@ -8,10 +10,10 @@ namespace Savanna.Frontend.Controllers;
 [Authorize]
 public class GameController : Controller
 {
-    private readonly BoardManager _boardManager;
-    private readonly UIManager _uiManager;
+    private readonly IBoardManager _boardManager;
+    private readonly IUIManager _uiManager;
 
-    public GameController(BoardManager boardManager, UIManager uiManager)
+    public GameController(IBoardManager boardManager, IUIManager uiManager)
     {
         _boardManager = boardManager;
         _uiManager = uiManager;

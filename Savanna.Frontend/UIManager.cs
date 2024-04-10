@@ -1,13 +1,15 @@
 ﻿using Savanna.Backend;
 using Savanna.Backend.Actors;
+using Savanna.Backend.Interfaces;
+using Savanna.Frontend.Interfaces;
 
 namespace Savanna.Frontend;
 
-public class UIManager
+public class UIManager : IUIManager
 {
-    private readonly BoardManager _boardManager;
+    private readonly IBoardManager _boardManager;
 
-    public UIManager(BoardManager boardManager)
+    public UIManager(IBoardManager boardManager)
     {
         _boardManager = boardManager;
     }
@@ -17,7 +19,7 @@ public class UIManager
         List<Animal> animals = _boardManager.GetBoardAnimals();
         List<List<char>> boardList = new List<List<char>>();
 
-        for (int i = 0; i < Constants.MaxY;  i++)
+        for (int i = 0; i < Constants.MaxY; i++)
         {
             List<char> row = new List<char>();
             for (int j = 0; j < Constants.MaxX; j++)

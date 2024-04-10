@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Savanna.Backend;
+using Savanna.Backend.Interfaces;
 using Savanna.Frontend;
 using Savanna.Frontend.Data;
+using Savanna.Frontend.Interfaces;
 using Savanna.Frontend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,8 +32,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<BoardManager>();
-builder.Services.AddSingleton<UIManager>();
+builder.Services.AddSingleton<IBoardManager, BoardManager>();
+builder.Services.AddSingleton<IUIManager, UIManager>();
 
 var app = builder.Build();
 
