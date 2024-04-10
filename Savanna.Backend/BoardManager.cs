@@ -1,10 +1,11 @@
 ﻿using Savanna.Backend.Actors;
+using Savanna.Backend.Interfaces;
 
 namespace Savanna.Backend;
 /// <summary>
 /// Manages the board and animals on it.
 /// </summary>
-public class BoardManager
+public class BoardManager : IBoardManager
 {
     public List<Animal> Animals = new List<Animal>();
     public List<Type> BirthAnimals = new List<Type>();

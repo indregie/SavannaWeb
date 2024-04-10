@@ -1,8 +1,11 @@
 ﻿@using Savanna.Backend
 @using Savanna.Frontend
+@using Savanna.Backend.Actors
 
 @{
     ViewBag.Title = "Savanna Game";
+    UIManager uiManager = ViewData["UIManager"] as UIManager;
+    List<List<char>> board = uiManager.GetGameBoard();
 }
 
 <h2>Welcome to Savanna!</h2>
@@ -10,16 +13,76 @@
 @foreach (var kvp in AnimalFactory.AnimalTypes)
 {
     <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
+
 }
 
-<div>
-    <form method="post" action="@Url.Action("HandleInput", "Game")">
-        <input type="text" name="animalSymbol" />
-        <input type="submit" value="Add animal" />
-    </form>
+@* posts input to controller HandleInput action *@
+<form id="animalForm">
+    <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
+    <input id="addAnimalButton" type="submit" value="Add animal" />
+</form>
+
+<div id="game-board">
+    <table>
+        <h3>Game board:</h3>
+        <tbody id="boardBody">
+            @for (int i = 0; i < Constants.MaxY; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < Constants.MaxX; j++)
+                    {
+                        <td id="cell-@i-@j">@board[i][j]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
-<div>
-    <h3>Game board:</h3>
-    @await Html.PartialAsync("_Board", ViewData["UIManager"] as Savanna.Frontend.UIManager)
-</div>
+<script>
+
+    const updateBoard = async () => {
+
+        const response = await fetch('@Url.Action("GetGameBoard", "Game")');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log("responseData", data);
+        const boardBody = document.getElementById('boardBody');
+        boardBody.innerHTML = '';
+        data.forEach((row, i) => {
+            const tr = document.createElement('tr');;
+            row.forEach((cell, j) => {
+                const td = document.createElement('td');
+                td.textContent = cell;
+                tr.appendChild(td);
+                console.log(cell);
+            });
+            boardBody.appendChild(tr);
+        });
+    }
+
+    document.getElementById('addAnimalButton').addEventListener('click', async (event) => {
+        event.preventDefault();
+        console.log("listener alive");
+        try {
+            var animalSymbol = document.getElementById('animalSymbol').value.toUpperCase();
+            const response = await fetch('@Url.Action("HandleInput", "Game")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ animalSymbol: animalSymbol })
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log("response fetched");
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+    setInterval(updateBoard, 1000);
+</script>
