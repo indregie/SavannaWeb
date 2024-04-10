@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString)
     );
 
-builder.Services.Configure<IdentityOptions>(Configuration.GetSection("IdentityOptions"));
+builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
 //identity to be able to use EF
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
