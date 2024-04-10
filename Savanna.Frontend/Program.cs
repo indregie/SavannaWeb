@@ -18,17 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString)
     );
 
+builder.Services.Configure<IdentityOptions>(Configuration.GetSection("IdentityOptions"));
 //identity to be able to use EF
-builder.Services.AddIdentity<AppUser, IdentityRole>(
-    options =>
-    {
-        options.Password.RequiredUniqueChars = 0;
-        options.Password.RequireUppercase = false;
-        options.Password.RequiredLength = 4;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequireLowercase = false;
-    }
-    )
+builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
