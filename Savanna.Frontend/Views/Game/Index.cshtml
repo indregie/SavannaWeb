@@ -1,11 +1,12 @@
 ﻿@using Savanna.Backend
 @using Savanna.Frontend
 @using Savanna.Backend.Actors
+@using Savanna.Frontend.Interfaces
 
 @{
     ViewBag.Title = "Savanna Game";
-    UIManager uiManager = ViewData["UIManager"] as UIManager;
-    List<List<char>> board = uiManager.GetGameBoard();
+    IUIManager? uiManager = ViewData["UIManager"] as IUIManager;
+    List<List<char>> board = uiManager?.GetGameBoard() ?? new List<List<char>>();
 }
 
 <h2>Welcome to Savanna!</h2>
@@ -26,15 +27,6 @@
     <table>
         <h3>Game board:</h3>
         <tbody id="boardBody">
-            @for (int i = 0; i < Constants.MaxY; i++)
-            {
-                <tr>
-                    @for (int j = 0; j < Constants.MaxX; j++)
-                    {
-                        <td id="cell-@i-@j">@board[i][j]</td>
-                    }
-                </tr>
-            }
         </tbody>
     </table>
 </div>

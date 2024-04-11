@@ -7,7 +7,7 @@ using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
-[Authorize]
+//[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
@@ -21,6 +21,7 @@ public class GameController : Controller
     public IActionResult Index()
     {
         ViewData["UIManager"] = _uiManager;
+        ViewData["by"] = 123;
         return View();
     }
 

@@ -110,4 +110,9 @@ public class BoardManager : IBoardManager
 
         return possibleMoves;
     }
+
+    public void SaveGame()
+    {
+
+    }
 }
