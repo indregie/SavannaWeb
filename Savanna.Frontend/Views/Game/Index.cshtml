@@ -17,6 +17,10 @@
 
 }
 
+<form id="saveGameForm">
+    <input id="saveGameButton" type="button" value="Save Game" />
+</form>
+
 @* posts input to controller HandleInput action *@
 <form id="animalForm">
     <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
@@ -75,6 +79,25 @@
                 console.error(error);
             }
         });
+
+    document.getElementById('saveGameButton').addEventListener('click', async (event) => {
+        event.preventDefault();
+        try {
+            const response = await fetch('@Url.Action("SaveGame", "Game")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ /* data for saving the game */ })
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Game saved succesfully');
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     setInterval(updateBoard, 1000);
 </script>

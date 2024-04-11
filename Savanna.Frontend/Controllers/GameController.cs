@@ -49,4 +49,19 @@ public class GameController : Controller
         var board = _uiManager.GetGameBoard();
         return Json(board);
     }
+
+    [HttpPost]
+    public IActionResult SaveGame()
+    {
+        try
+        {
+            _boardManager.SaveGame();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to save game {ex.Message}");
+            return StatusCode(500, ex.Message);
+        }
+    }
 }
