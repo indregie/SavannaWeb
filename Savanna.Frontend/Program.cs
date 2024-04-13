@@ -26,6 +26,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 builder.Services.AddSingleton<IBoardManager, BoardManager>();
 builder.Services.AddSingleton<IUIManager, UIManager>();
+builder.Services.AddScoped<DataService>();
 
 var app = builder.Build();
 

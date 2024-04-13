@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Savanna.Backend;
 using Savanna.Backend.Interfaces;
 using Savanna.Frontend.Interfaces;
+using Savanna.Frontend.Models;
 using Savanna.Frontend.Models.dto;
+using System.Text.Json;
 
 namespace Savanna.Frontend.Controllers;
 
@@ -12,11 +15,15 @@ public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
     private readonly IUIManager _uiManager;
+    private readonly DataService _dataService;
+    private readonly UserManager<AppUser> _userManager;
 
-    public GameController(IBoardManager boardManager, IUIManager uiManager)
+    public GameController(IBoardManager boardManager, IUIManager uiManager, DataService dataService, UserManager<AppUser> userManager)
     {
         _boardManager = boardManager;
         _uiManager = uiManager;
+        _dataService = dataService;
+        _userManager = userManager;
     }
     public IActionResult Index()
     {
@@ -55,7 +62,12 @@ public class GameController : Controller
     {
         try
         {
-            _boardManager.SaveGame();
+            var animals = _boardManager.GetBoardAnimals();
+            var animalsJson = JsonSerializer.Serialize(animals);
+            var game = new Game();
+            game.AnimalsJson = animalsJson;
+            var userId = _userManager.GetUserId(User);
+            _dataService.SaveGame(userId, animalsJson);
             return Ok();
         }
         catch (Exception ex)
