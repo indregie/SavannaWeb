@@ -137,7 +137,9 @@
                 throw new Error('Failed to start new game: ' + response.statusText);
             }
 
-            clearInterval = setInterval(updateBoard, 1000);
+            clearInterval(intervalId);
+            await updateBoard();
+            intervalId = setInterval(updateBoard, 1000);
             document.getElementById('gameContent').classList.remove('hidden');
         } catch (error) {
             console.error(error);
