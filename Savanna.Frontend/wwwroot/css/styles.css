@@ -13,3 +13,9 @@
 .hidden {
     display: none;
 }
+
+.game-board {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+}

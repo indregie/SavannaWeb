@@ -21,31 +21,35 @@
     </form>
 </div>
 
+<br>
+
 <div id="gameContent" class="hidden">
-    <p>Loaded animals:</p>
+    <p><strong>Loaded animals:</strong></p>
     @foreach (var kvp in AnimalFactory.AnimalTypes)
     {
         <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
 
     }
 
-    <form id="saveGameForm">
-        <input id="saveGameButton" type="button" value="Save Game" />
-    </form>
-
     @* posts input to controller HandleInput action *@
     <form id="animalForm">
         <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
-        <input id="addAnimalButton" type="submit" value="Add animal" />
+        <input id="addAnimalButton" type="submit" value="Add" />
     </form>
-
-    <div id="game-board">
+    <br>
+    <div id="game-board" class="game-board">
         <table>
-            <p>Game board:</p>
+            <p><strong>Game board:</strong></p>
             <tbody id="boardBody">
             </tbody>
         </table>
     </div>
+
+    <br>
+    <br>
+    <form id="saveGameForm">
+        <input id="saveGameButton" type="button" class="btn btn-primary" value="Save Game" />
+    </form>
 </div>
 
 
@@ -77,7 +81,8 @@
         event.preventDefault();
         console.log("listener alive");
         try {
-            var animalSymbol = document.getElementById('animalSymbol').value.toUpperCase();
+            var animalSymbolInput = document.getElementById('animalSymbol');
+            var animalSymbol = animalSymbolInput.value.toUpperCase();
             const response = await fetch('@Url.Action("HandleInput", "Game")', {
                 method: 'POST',
                 headers: {
@@ -89,6 +94,7 @@
                 throw new Error('Network response was not ok');
             }
             console.log("response fetched");
+            animalSymbolInput.value = '';
         } catch (error) {
             console.error(error);
         }
