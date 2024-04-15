@@ -111,8 +111,10 @@ public class BoardManager : IBoardManager
         return possibleMoves;
     }
 
-    public void SaveGame()
+    public void ClearAnimals()
     {
-
+        Animals.Clear();
+        BirthAnimals.Clear();
+        _iterationCount = 0;
     }
 }

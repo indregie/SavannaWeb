@@ -123,10 +123,25 @@
         }
     });
 
-    document.getElementById('newGameButton').addEventListener('click', () => {
+    document.getElementById('newGameButton').addEventListener('click', async () => {
         //call new game endpoint to clear Animals list
-        //set interval
-        document.getElementById('gameContent').classList.remove('hidden');
+        try {
+            const response = await fetch('@Url.Action("NewGame", "Game")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to start new game: ' + response.statusText);
+            }
+
+            clearInterval = setInterval(updateBoard, 1000);
+            document.getElementById('gameContent').classList.remove('hidden');
+        } catch (error) {
+            console.error(error);
+        }
     });
 
     intervalId = setInterval(updateBoard, 1000);

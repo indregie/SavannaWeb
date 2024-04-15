@@ -7,5 +7,5 @@ public interface IBoardManager
     void AddAnimal(Type animalType);
     List<Animal> GetBoardAnimals();
     void MoveAnimals();
-    void SaveGame();
+    void ClearAnimals();
 }

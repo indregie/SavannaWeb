@@ -76,4 +76,19 @@ public class GameController : Controller
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpPost]
+    public IActionResult NewGame()
+    {
+        try
+        {
+            _boardManager.ClearAnimals();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to start new game {ex.Message}");
+            return StatusCode(500, ex.Message);
+        }
+    }
 }
