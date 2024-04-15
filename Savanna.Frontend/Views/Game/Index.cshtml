@@ -54,6 +54,7 @@
 
 
 <script>
+    let intervalId = null;
 
     const updateBoard = async () => {
 
@@ -103,6 +104,8 @@
     document.getElementById('saveGameButton').addEventListener('click', async (event) => {
         event.preventDefault();
         try {
+            // stop gameboard
+            clearInterval(intervalId); 
             const response = await fetch('@Url.Action("SaveGame", "Game")', {
                 method: 'POST',
                 headers: {
@@ -123,5 +126,5 @@
         document.getElementById('gameContent').classList.remove('hidden');
     });
 
-    setInterval(updateBoard, 1000);
+    intervalId = setInterval(updateBoard, 1000);
 </script>
