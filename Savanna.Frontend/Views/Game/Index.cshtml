@@ -12,13 +12,15 @@
 <h2>Welcome to Savanna!</h2>
 <p>Please choose what you want to do:</p>
 
-<form id="loadGameForm">
-    <input id="loadGameButton" type="button" value="Load Game" />
-</form>
+<div class="button-container">
+    <form id="loadGameForm">
+        <input id="loadGameButton" type="button" class="btn btn-primary" value="Load Game" />
+    </form>
+    <form id="newGameForm">
+        <input id="newGameButton" type="button" class="btn btn-primary" value="New Game" />
+    </form>
+</div>
 
-<form id="newGameForm">
-    <input id="newGameButton" type="button" value="New Game" />
-</form>
 
 <p>Loaded animals:</p>
 @foreach (var kvp in AnimalFactory.AnimalTypes)
@@ -39,7 +41,7 @@
 
 <div id="game-board">
     <table>
-        <h3>Game board:</h3>
+        <p>Game board:</p>
         <tbody id="boardBody">
         </tbody>
     </table>
@@ -85,10 +87,10 @@
                 throw new Error('Network response was not ok');
             }
             console.log("response fetched");
-            } catch (error) {
-                console.error(error);
-            }
-        });
+        } catch (error) {
+            console.error(error);
+        }
+    });
 
     document.getElementById('saveGameButton').addEventListener('click', async (event) => {
         event.preventDefault();

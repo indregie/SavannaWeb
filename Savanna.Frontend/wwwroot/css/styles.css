@@ -1,3 +1,11 @@
 #boardBody td{
   font-family: monospace;
 }
+
+.button-container {
+    display: flex;
+}
+
+.button-container form {
+    margin-right: 2px;
+}
