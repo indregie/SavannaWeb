@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Savanna.Frontend.Controllers;
 
-[Authorize]
+//[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
