@@ -105,7 +105,8 @@
         event.preventDefault();
         try {
             // stop gameboard
-            clearInterval(intervalId); 
+            clearInterval(intervalId);
+            document.getElementById('gameContent').classList.add('hidden');
             const response = await fetch('@Url.Action("SaveGame", "Game")', {
                 method: 'POST',
                 headers: {
@@ -123,6 +124,8 @@
     });
 
     document.getElementById('newGameButton').addEventListener('click', () => {
+        //call new game endpoint to clear Animals list
+        //set interval
         document.getElementById('gameContent').classList.remove('hidden');
     });
 

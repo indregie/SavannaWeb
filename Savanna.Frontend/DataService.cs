@@ -1,4 +1,5 @@
-﻿using Savanna.Frontend.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Savanna.Frontend.Data;
 using Savanna.Frontend.Models;
 
 namespace Savanna.Frontend;
@@ -13,18 +14,28 @@ public class DataService
 
     public async Task SaveGame(string userId, string gameJson)
     {
-        Game game = new Game() 
-        { 
-            UserId = userId,
-            AnimalsJson = gameJson
-        };
+        var existingGame = _dbContext.Games.FirstOrDefault(x => x.UserId == userId);
 
-        _dbContext.Games.Add(game);
+        if (existingGame != null)
+        {
+            existingGame.AnimalsJson = gameJson;
+        }
+        else
+        {
+            Game game = new Game()
+            {
+                UserId = userId,
+                AnimalsJson = gameJson
+            };
+
+            _dbContext.Games.Add(game);
+        }
+
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Game> LoadGame(string userId, string game)
+    public async Task<Game> LoadGame(string userId)
     {
-        return await _dbContext.Games.FindAsync(userId);
+        return await _dbContext.Games.FirstOrDefaultAsync(x => x.UserId == userId);
     }
 }
