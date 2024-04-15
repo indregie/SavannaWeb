@@ -9,3 +9,7 @@
 .button-container form {
     margin-right: 2px;
 }
+
+.hidden {
+    display: none;
+}

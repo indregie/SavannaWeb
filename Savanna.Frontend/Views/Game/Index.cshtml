@@ -21,31 +21,33 @@
     </form>
 </div>
 
+<div id="gameContent" class="hidden">
+    <p>Loaded animals:</p>
+    @foreach (var kvp in AnimalFactory.AnimalTypes)
+    {
+        <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
 
-<p>Loaded animals:</p>
-@foreach (var kvp in AnimalFactory.AnimalTypes)
-{
-    <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
+    }
 
-}
+    <form id="saveGameForm">
+        <input id="saveGameButton" type="button" value="Save Game" />
+    </form>
 
-<form id="saveGameForm">
-    <input id="saveGameButton" type="button" value="Save Game" />
-</form>
+    @* posts input to controller HandleInput action *@
+    <form id="animalForm">
+        <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
+        <input id="addAnimalButton" type="submit" value="Add animal" />
+    </form>
 
-@* posts input to controller HandleInput action *@
-<form id="animalForm">
-    <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
-    <input id="addAnimalButton" type="submit" value="Add animal" />
-</form>
-
-<div id="game-board">
-    <table>
-        <p>Game board:</p>
-        <tbody id="boardBody">
-        </tbody>
-    </table>
+    <div id="game-board">
+        <table>
+            <p>Game board:</p>
+            <tbody id="boardBody">
+            </tbody>
+        </table>
+    </div>
 </div>
+
 
 <script>
 
@@ -109,6 +111,10 @@
         } catch (error) {
             console.error(error);
         }
+    });
+
+    document.getElementById('newGameButton').addEventListener('click', () => {
+        document.getElementById('gameContent').classList.remove('hidden');
     });
 
     setInterval(updateBoard, 1000);
