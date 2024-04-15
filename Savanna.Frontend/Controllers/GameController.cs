@@ -58,7 +58,7 @@ public class GameController : Controller
     }
 
     [HttpPost]
-    public IActionResult SaveGame()
+    public async Task<IActionResult> SaveGame()
     {
         try
         {
@@ -67,7 +67,7 @@ public class GameController : Controller
             var game = new Game();
             game.AnimalsJson = animalsJson;
             var userId = _userManager.GetUserId(User);
-            _dataService.SaveGame(userId, animalsJson);
+            await _dataService.SaveGame(userId, animalsJson);
             return Ok();
         }
         catch (Exception ex)
