@@ -101,13 +101,18 @@ public class GameController : Controller
 
             _boardManager.ClearAnimals();
 
-            List<JObject> jsonAnimals = JsonConvert.DeserializeObject<List<JObject>>(game.AnimalsJson);
+            List<JObject>? jsonAnimals = JsonConvert.DeserializeObject<List<JObject>>(game.AnimalsJson);
+
+            if (jsonAnimals == null)
+            {
+                return StatusCode(500, "Unexpected error occured.");
+            }
 
             foreach (var jsonAnimal in jsonAnimals)
             {
-                char animalSymbol = jsonAnimal["Symbol"].ToString()[0];
-                Type animalType = AnimalFactory.AnimalTypes[animalSymbol];
-                Animal animal = (Animal)jsonAnimal.ToObject(animalType);
+                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ?? throw new InvalidOperationException("Animal symbol is null or empty.");
+                Type? animalType = AnimalFactory.AnimalTypes[animalSymbol];
+                Animal? animal = (Animal)jsonAnimal.ToObject(animalType);
                 _boardManager.Animals.Add(animal);
             }
             return Ok();
