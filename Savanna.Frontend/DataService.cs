@@ -34,7 +34,7 @@ public class DataService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Game> LoadGame(string userId)
+    public async Task<Game?> LoadGame(string userId)
     {
         return await _dbContext.Games.FirstOrDefaultAsync(x => x.UserId == userId);
     }

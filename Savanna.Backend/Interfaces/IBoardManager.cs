@@ -4,6 +4,7 @@ namespace Savanna.Backend.Interfaces;
 
 public interface IBoardManager
 {
+    List<Animal> Animals { get; }
     void AddAnimal(Type animalType);
     List<Animal> GetBoardAnimals();
     void MoveAnimals();

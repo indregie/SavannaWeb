@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Savanna.Backend;
+using Savanna.Backend.Actors;
 using Savanna.Backend.Interfaces;
 using Savanna.Frontend.Interfaces;
 using Savanna.Frontend.Models;
@@ -67,8 +68,46 @@ public class GameController : Controller
             var game = new Game();
             game.AnimalsJson = animalsJson;
             var userId = _userManager.GetUserId(User);
+            if (userId == null)
+            {
+                return StatusCode(500, "Unexpected error occured.");
+            }
             await _dataService.SaveGame(userId, animalsJson);
             return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to save game {ex.Message}");
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LoadGame()
+    {
+        try
+        {
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
+            {
+                return StatusCode(500, "Unexpected error occured.");
+            }
+            var game = await _dataService.LoadGame(userId);
+            
+            if (game == null)
+            {
+                return NotFound("No game found for the user.");
+            }
+
+            _boardManager.ClearAnimals();
+
+            var animals = JsonSerializer.Deserialize<List<Animal>>(game.AnimalsJson);
+            foreach (var animal in animals)
+            {
+                _boardManager.Animals.Add(animal);
+            }
+            return Ok();
+
         }
         catch (Exception ex)
         {
