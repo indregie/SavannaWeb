@@ -12,7 +12,7 @@ using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
-[Authorize]
+//[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
@@ -101,19 +101,32 @@ public class GameController : Controller
 
             _boardManager.ClearAnimals();
 
+            if (game.AnimalsJson == null)
+            {
+                return StatusCode(500, "Game data is null.");
+            }
+
             List<JObject>? jsonAnimals = JsonConvert.DeserializeObject<List<JObject>>(game.AnimalsJson);
 
             if (jsonAnimals == null)
             {
-                return StatusCode(500, "Unexpected error occured.");
+                return StatusCode(500, "Failed to deserialize game data");
             }
 
             foreach (var jsonAnimal in jsonAnimals)
             {
                 char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ?? throw new InvalidOperationException("Animal symbol is null or empty.");
                 Type? animalType = AnimalFactory.AnimalTypes[animalSymbol];
-                Animal? animal = (Animal)jsonAnimal.ToObject(animalType);
-                _boardManager.Animals.Add(animal);
+                if (animalType == null)
+                {
+                    await Console.Out.WriteLineAsync($"Animal type not found for symbol {animalSymbol}");
+                    continue;
+                }
+                Animal? animal = (Animal)jsonAnimal.ToObject(animalType)!;
+                if (animal != null)
+                {
+                    _boardManager.Animals.Add(animal);
+                }
             }
             return Ok();
 
