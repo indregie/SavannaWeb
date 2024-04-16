@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Savanna.Backend;
 using Savanna.Backend.Actors;
 using Savanna.Backend.Interfaces;
 using Savanna.Frontend.Interfaces;
 using Savanna.Frontend.Models;
 using Savanna.Frontend.Models.dto;
-using System.Text.Json;
 
 namespace Savanna.Frontend.Controllers;
 
-//[Authorize]
+[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
@@ -29,7 +30,6 @@ public class GameController : Controller
     public IActionResult Index()
     {
         ViewData["UIManager"] = _uiManager;
-        ViewData["by"] = 123;
         return View();
     }
 
@@ -64,7 +64,7 @@ public class GameController : Controller
         try
         {
             var animals = _boardManager.GetBoardAnimals();
-            var animalsJson = JsonSerializer.Serialize(animals);
+            var animalsJson = JsonConvert.SerializeObject(animals);
             var game = new Game();
             game.AnimalsJson = animalsJson;
             var userId = _userManager.GetUserId(User);
@@ -101,9 +101,13 @@ public class GameController : Controller
 
             _boardManager.ClearAnimals();
 
-            var animals = JsonSerializer.Deserialize<List<Animal>>(game.AnimalsJson);
-            foreach (var animal in animals)
+            List<JObject> jsonAnimals = JsonConvert.DeserializeObject<List<JObject>>(game.AnimalsJson);
+
+            foreach (var jsonAnimal in jsonAnimals)
             {
+                char animalSymbol = jsonAnimal["Symbol"].ToString()[0];
+                Type animalType = AnimalFactory.AnimalTypes[animalSymbol];
+                Animal animal = (Animal)jsonAnimal.ToObject(animalType);
                 _boardManager.Animals.Add(animal);
             }
             return Ok();

@@ -110,7 +110,9 @@ public class BoardManager : IBoardManager
 
         return possibleMoves;
     }
-
+    /// <summary>
+    /// Clear animal list when calling new game.
+    /// </summary>
     public void ClearAnimals()
     {
         Animals.Clear();

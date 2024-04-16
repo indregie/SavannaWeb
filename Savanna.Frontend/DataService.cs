@@ -11,7 +11,12 @@ public class DataService
     {
         _dbContext = dbContext;
     }
-
+    /// <summary>
+    /// Saves game to the database
+    /// </summary>
+    /// <param name="userId">Logged in user</param>
+    /// <param name="gameJson">Serialized List<Animal></param>
+    /// <returns></returns>
     public async Task SaveGame(string userId, string gameJson)
     {
         var existingGame = _dbContext.Games.FirstOrDefault(x => x.UserId == userId);
@@ -33,7 +38,11 @@ public class DataService
 
         await _dbContext.SaveChangesAsync();
     }
-
+    /// <summary>
+    /// Loads game from database
+    /// </summary>
+    /// <param name="userId">Logged in user</param>
+    /// <returns>Game by the user</returns>
     public async Task<Game?> LoadGame(string userId)
     {
         return await _dbContext.Games.FirstOrDefaultAsync(x => x.UserId == userId);

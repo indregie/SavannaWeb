@@ -1,11 +1,12 @@
 ﻿let intervalId = null;
+let gameRunning = false;
 
 const updateBoard = async () => {
-
     const response = await fetch(getGameBoardUrl);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
+    gameRunning = true;
     const data = await response.json();
     console.log("responseData", data);
     const boardBody = document.getElementById('boardBody');
@@ -47,6 +48,7 @@ document.getElementById('addAnimalButton').addEventListener('click', async (even
 
 document.getElementById('saveGameButton').addEventListener('click', async (event) => {
     event.preventDefault();
+    gameRunning = false;
     try {
         // stop gameboard
         clearInterval(intervalId);
@@ -102,10 +104,22 @@ document.getElementById('loadGameButton').addEventListener('click', async () => 
             throw new Error('Failed to load game: ' + response.statusText);
         }
         console.log('game loaded successfully');
+        clearInterval(intervalId);
+        await updateBoard();
+        intervalId = setInterval(updateBoard, 1000);
+        document.getElementById('gameContent').classList.remove('hidden');
     } catch (error) {
         console.error(error);
         alert('Failed to load game. Please try again later.');
     }
 });
 
-intervalId = setInterval(updateBoard, 1000);
+window.addEventListener('beforeunload', (event) => {
+    if (gameRunning) {
+        event.preventDefault();
+        event.returnValue = '';
+        alert('Are you sure you want to leave? Your progress will not be saved.');
+    }
+});
+
+
