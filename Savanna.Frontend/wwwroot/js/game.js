@@ -2,7 +2,7 @@
 
 const updateBoard = async () => {
 
-    const response = await fetch('@Url.Action("GetGameBoard", "Game")');
+    const response = await fetch(getGameBoardUrl);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
@@ -28,7 +28,7 @@ document.getElementById('addAnimalButton').addEventListener('click', async (even
     try {
         var animalSymbolInput = document.getElementById('animalSymbol');
         var animalSymbol = animalSymbolInput.value.toUpperCase();
-        const response = await fetch('@Url.Action("HandleInput", "Game")', {
+        const response = await fetch(handleInputUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ document.getElementById('saveGameButton').addEventListener('click', async (event
         // stop gameboard
         clearInterval(intervalId);
         document.getElementById('gameContent').classList.add('hidden');
-        const response = await fetch('@Url.Action("SaveGame", "Game")', {
+        const response = await fetch(saveGameUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ document.getElementById('saveGameButton').addEventListener('click', async (event
 document.getElementById('newGameButton').addEventListener('click', async () => {
     //call new game endpoint to clear Animals list
     try {
-        const response = await fetch('@Url.Action("NewGame", "Game")', {
+        const response = await fetch(newGameUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -90,4 +90,4 @@ document.getElementById('newGameButton').addEventListener('click', async () => {
     }
 });
 
-intervalId = setInterval(updateBoar, 1000);
+intervalId = setInterval(updateBoard, 1000);
