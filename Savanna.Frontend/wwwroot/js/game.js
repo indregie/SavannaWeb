@@ -83,11 +83,11 @@ document.getElementById('newGameButton').addEventListener('click', async () => {
 
         clearInterval(intervalId);
         await updateBoard();
-        intervalId = setInterval(updateBoard, 1000);
+        intervalId= setInterval(updateBoard, 1000);
         document.getElementById('gameContent').classList.remove('hidden');
     } catch (error) {
         console.error(error);
     }
 });
 
-intervalId = setInterval(updateBoard, 1000);
+intervalId = setInterval(updateBoar, 1000);

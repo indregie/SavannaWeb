@@ -8,16 +8,16 @@
     IUIManager? uiManager = ViewData["UIManager"] as IUIManager;
     List<List<char>> board = uiManager?.GetGameBoard() ?? new List<List<char>>();
 }
-
+<script src="~/js/game.js"></script>
 <h2>Welcome to Savanna!</h2>
 <p>Please choose what you want to do:</p>
 
 <div class="button-container">
     <form id="loadGameForm">
-        <input id="loadGameButton" type="button" class="btn btn-primary" value="Load Game" />
+        <input id="loadGameButton" type="button" class="btn btn-primary" value="Load Game" onclick="updateBoard()"/>
     </form>
     <form id="newGameForm">
-        <input id="newGameButton" type="button" class="btn btn-primary" value="New Game" />
+        <input id="newGameButton" type="button" class="btn btn-primary" value="New Game" onclick="updateBoard()" />
     </form>
 </div>
 
@@ -53,11 +53,11 @@
 </div>
 
 
-<script src="~/js/game.js">
-    // let intervalId = null;
+
+
+@*     // let intervalId = null;
 
     // const updateBoard = async () => {
-
     //     const response = await fetch('@Url.Action("GetGameBoard", "Game")');
     //     if (!response.ok) {
     //         throw new Error('Network response was not ok');
@@ -139,12 +139,15 @@
 
     //         clearInterval(intervalId);
     //         await updateBoard();
-    //         intervalId = setInterval(updateBoard, 1000);
+    //         intervalId= setInterval(updateBoard, 1000);
     //         document.getElementById('gameContent').classList.remove('hidden');
     //     } catch (error) {
     //         console.error(error);
     //     }
     // });
 
-    // intervalId = setInterval(updateBoard, 1000);
-</script>
+    // intervalId = setInterval(updateBoard, 1000); *@
+
+
+
+
