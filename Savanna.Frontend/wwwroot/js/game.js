@@ -90,4 +90,22 @@ document.getElementById('newGameButton').addEventListener('click', async () => {
     }
 });
 
+document.getElementById('loadGameButton').addEventListener('click', async () => {
+    try {
+        const response = await fetch(loadGameUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to load game: ' + response.statusText);
+        }
+        console.log('game loaded successfully');
+    } catch (error) {
+        console.error(error);
+        alert('Failed to load game. Please try again later.');
+    }
+});
+
 intervalId = setInterval(updateBoard, 1000);
