@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Savanna.Frontend.Data;
+using Savanna.Frontend.Interfaces;
 using Savanna.Frontend.Models;
 
 namespace Savanna.Frontend;
 /// <summary>
 /// Service class for managing game data in the database.
 /// </summary>
-public class DataService
+public class DataService : IDataService
 {
     private readonly AppDbContext _dbContext;
     public DataService(AppDbContext dbContext)

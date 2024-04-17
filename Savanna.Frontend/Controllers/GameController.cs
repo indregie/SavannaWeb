@@ -16,11 +16,11 @@ namespace Savanna.Frontend.Controllers;
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
-    private readonly IUIManager _uiManager;
-    private readonly DataService _dataService;
+    private readonly IDrawingService _uiManager;
+    private readonly IDataService _dataService;
     private readonly UserManager<AppUser> _userManager;
 
-    public GameController(IBoardManager boardManager, IUIManager uiManager, DataService dataService, UserManager<AppUser> userManager)
+    public GameController(IBoardManager boardManager, IDrawingService uiManager, IDataService dataService, UserManager<AppUser> userManager)
     {
         _boardManager = boardManager;
         _uiManager = uiManager;

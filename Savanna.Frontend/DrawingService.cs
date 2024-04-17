@@ -5,11 +5,11 @@ using Savanna.Frontend.Interfaces;
 
 namespace Savanna.Frontend;
 
-public class UIManager : IUIManager
+public class DrawingService : IDrawingService
 {
     private readonly IBoardManager _boardManager;
 
-    public UIManager(IBoardManager boardManager)
+    public DrawingService(IBoardManager boardManager)
     {
         _boardManager = boardManager;
     }

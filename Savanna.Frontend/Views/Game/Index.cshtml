@@ -5,7 +5,7 @@
 
 @{
     ViewBag.Title = "Savanna Game";
-    IUIManager? uiManager = ViewData["UIManager"] as IUIManager;
+    IDrawingService? uiManager = ViewData["UIManager"] as IDrawingService;
     List<List<char>> board = uiManager?.GetGameBoard() ?? new List<List<char>>();
     var getGameBoardUrl = Url.Action("GetGameBoard", "Game");
     var handleInputUrl = Url.Action("HandleInput", "Game");
