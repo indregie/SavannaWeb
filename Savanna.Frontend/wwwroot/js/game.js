@@ -21,6 +21,11 @@ const updateBoard = async () => {
         });
         boardBody.appendChild(tr);
     });
+
+    const iterationCountSpan = document.getElementById('iterationCount');
+    const animalCountSpan = document.getElementById('animalCount');
+    iterationCountSpan.textContent = data.IterationCount;
+    animalCountSpan.textContent = data.Animals.length;
 }
 
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {

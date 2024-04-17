@@ -16,20 +16,20 @@ namespace Savanna.Frontend.Controllers;
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
-    private readonly IDrawingService _uiManager;
+    private readonly IDrawingService _drawingService;
     private readonly IDataService _dataService;
     private readonly UserManager<AppUser> _userManager;
 
-    public GameController(IBoardManager boardManager, IDrawingService uiManager, IDataService dataService, UserManager<AppUser> userManager)
+    public GameController(IBoardManager boardManager, IDrawingService drawingService, IDataService dataService, UserManager<AppUser> userManager)
     {
         _boardManager = boardManager;
-        _uiManager = uiManager;
+        _drawingService = drawingService;
         _dataService = dataService;
         _userManager = userManager;
     }
     public IActionResult Index()
     {
-        ViewData["UIManager"] = _uiManager;
+        ViewData["UIManager"] = _drawingService;
         return View();
     }
 
@@ -54,8 +54,8 @@ public class GameController : Controller
     public IActionResult GetGameBoard()
     {
         _boardManager.MoveAnimals();
-        var board = _uiManager.GetGameBoard();
-        return Json(board);
+        var board = _drawingService.GetGameBoard();
+        return Json(new { IterationCount = _boardManager.IterationCount, Animals = _boardManager.Animals, Board = board });
     }
 
     [HttpPost]
