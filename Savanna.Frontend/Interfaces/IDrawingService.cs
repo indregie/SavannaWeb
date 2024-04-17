@@ -1,6 +1,6 @@
 ﻿namespace Savanna.Frontend.Interfaces;
 
-public interface IUIManager
+public interface IDrawingService
 {
     List<List<char>> GetGameBoard();
 }

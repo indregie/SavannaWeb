@@ -7,7 +7,7 @@ namespace Savanna.Backend;
 /// </summary>
 public class BoardManager : IBoardManager
 {
-    public List<Animal> Animals = new List<Animal>();
+    public List<Animal> Animals { get; set; } = new List<Animal>();
     public List<Type> BirthAnimals = new List<Type>();
     private Random _random = new Random();
     private int _iterationCount = 0;
@@ -109,5 +109,14 @@ public class BoardManager : IBoardManager
         var possibleMoves = allPositions.Except(occupiedPositions).ToList();
 
         return possibleMoves;
+    }
+    /// <summary>
+    /// Clear animal list when calling new game.
+    /// </summary>
+    public void ClearAnimals()
+    {
+        Animals.Clear();
+        BirthAnimals.Clear();
+        _iterationCount = 0;
     }
 }
