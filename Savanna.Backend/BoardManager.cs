@@ -10,7 +10,7 @@ public class BoardManager : IBoardManager
     public List<Animal> Animals { get; set; } = new List<Animal>();
     public List<Type> BirthAnimals = new List<Type>();
     private Random _random = new Random();
-    private int _iterationCount = 0;
+    public int IterationCount { get; set; } = 0;
 
     /// <summary>
     /// Adds animal to the board.
@@ -69,15 +69,15 @@ public class BoardManager : IBoardManager
     /// </summary>
     public void MoveAnimals()
     {
-        _iterationCount++;
+        IterationCount++;
 
         foreach (var animal in Animals)
         {
-            if (_iterationCount % 2 == 1 && !animal.IsPredator)
+            if (IterationCount % 2 == 1 && !animal.IsPredator)
             {
                 animal.Move(this, _random);
             }
-            if (_iterationCount % 2 == 0 && animal.IsPredator)
+            if (IterationCount % 2 == 0 && animal.IsPredator)
             {
                 animal.Move(this, _random);
             }
@@ -117,6 +117,6 @@ public class BoardManager : IBoardManager
     {
         Animals.Clear();
         BirthAnimals.Clear();
-        _iterationCount = 0;
+        IterationCount = 0;
     }
 }

@@ -12,7 +12,7 @@ using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
-[Authorize]
+//[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
@@ -115,7 +115,8 @@ public class GameController : Controller
 
             foreach (var jsonAnimal in jsonAnimals)
             {
-                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ?? throw new InvalidOperationException("Animal symbol is null or empty.");
+                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ?? 
+                    throw new InvalidOperationException("Animal symbol is null or empty.");
                 Type? animalType = AnimalFactory.AnimalTypes[animalSymbol];
                 if (animalType == null)
                 {
