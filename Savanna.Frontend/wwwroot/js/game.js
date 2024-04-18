@@ -11,7 +11,7 @@ const updateBoard = async () => {
     console.log("responseData", data);
     const boardBody = document.getElementById('boardBody');
     boardBody.innerHTML = '';
-    data.forEach((row, i) => {
+    data.board.forEach((row, i) => {
         const tr = document.createElement('tr');;
         row.forEach((cell, j) => {
             const td = document.createElement('td');
@@ -24,8 +24,8 @@ const updateBoard = async () => {
 
     const iterationCountSpan = document.getElementById('iterationCount');
     const animalCountSpan = document.getElementById('animalCount');
-    iterationCountSpan.textContent = data.IterationCount;
-    animalCountSpan.textContent = data.Animals.length;
+    iterationCountSpan.textContent = data.iterationCount;
+    animalCountSpan.textContent = data.animals.length;
 }
 
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {

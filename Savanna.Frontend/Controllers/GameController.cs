@@ -55,7 +55,14 @@ public class GameController : Controller
     {
         _boardManager.MoveAnimals();
         var board = _drawingService.GetGameBoard();
-        return Json(new { IterationCount = _boardManager.IterationCount, Animals = _boardManager.Animals, Board = board });
+        return Json(new { 
+            iterationCount = _boardManager.IterationCount, 
+            animals = _boardManager.Animals, 
+            board = board 
+        });
+
+        //`{"IterationCount": 5, "Animals": [{ }, { }], "Board": [[],[]]}`
+        //`[[],[]]`
     }
 
     [HttpPost]
