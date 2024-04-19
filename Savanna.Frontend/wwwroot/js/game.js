@@ -16,6 +16,10 @@ const updateBoard = async () => {
         row.forEach((cell, j) => {
             const td = document.createElement('td');
             td.textContent = cell;
+            td.addEventListener('click', () => {
+                console.log('Animal clicked:', cell)
+                //tooltip
+            });
             tr.appendChild(td);
             console.log(cell);
         });

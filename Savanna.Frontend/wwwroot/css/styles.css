@@ -19,3 +19,17 @@
     border: 1px solid #ccc;
     padding: 10px;
 }
+
+td:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+}

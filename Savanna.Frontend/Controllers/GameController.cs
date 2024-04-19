@@ -60,9 +60,6 @@ public class GameController : Controller
             animals = _boardManager.Animals, 
             board = board 
         });
-
-        //`{"IterationCount": 5, "Animals": [{ }, { }], "Board": [[],[]]}`
-        //`[[],[]]`
     }
 
     [HttpPost]
