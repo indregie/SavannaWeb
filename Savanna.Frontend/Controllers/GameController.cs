@@ -158,23 +158,23 @@ public class GameController : Controller
         }
     }
 
-    [HttpGet]
-    public IActionResult GetAnimalStats(long animalId)
-    {
-        var animal = _boardManager.Animals.FirstOrDefault(a => a.Id == animalId);
-        if (animal == null)
-        {
-            return NotFound();
-        }
+    //[HttpGet]
+    //public IActionResult GetAnimalStats(long animalId)
+    //{
+    //    var animal = _boardManager.Animals.FirstOrDefault(a => a.Id == animalId);
+    //    if (animal == null)
+    //    {
+    //        return NotFound();
+    //    }
 
-        var stats = new
-        {
-            species = animal.GetType().Name,
-            age = animal.Age,
-            health = animal.Health,
-            offsprings = animal.Offsprings
-        };
+    //    var stats = new
+    //    {
+    //        species = animal.GetType().Name,
+    //        age = animal.Age,
+    //        health = animal.Health,
+    //        offsprings = animal.Offsprings
+    //    };
 
-        return Json(stats);
-    }
+    //    return Json(stats);
+    //}
 }

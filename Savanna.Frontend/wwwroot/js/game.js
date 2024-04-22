@@ -31,7 +31,6 @@ const updateBoard = async () => {
             td.classList.add('animal-cell');
             td.dataset.animalId = animalId;
             td.addEventListener('click', animalMouseClick);
-            td.addEventListener('mouseleave', handleMouseLeave);
             tr.appendChild(td);
         });
         boardBody.appendChild(tr);
@@ -77,7 +76,6 @@ document.getElementById('saveGameButton').addEventListener('click', async (event
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ /* data for saving the game */ })
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -146,8 +144,8 @@ const animalMouseClick = async (event) => {
     const tooltip = document.getElementById('tooltip');
     animal = animals[animalId];
     if (animal != null) {
-        console.log('animal clicked', animalId);
-        tooltip.textContent = `${animal.species}. Age: ${animal.age}, Health: ${animal.health}, Offsprings ${animal.offsprings}`;
+        console.log('animal clicked', animalId, tooltip);
+        tooltip.textContent = `${animal.symbol}. Age: ${animal.age}, Health: ${animal.health}, Offsprings ${animal.offsprings}`;
         tooltip.style.display = 'block'; //show tooltip
         tooltip.style.left = `${event.pageX}px`;
         tooltip.style.top = `${event.pageY}px`;
@@ -156,7 +154,10 @@ const animalMouseClick = async (event) => {
     }    
 }
 
-const handleMouseLeave = () => {
-    const tooltip = document.getElementById('tooltip');
-    tooltip.style.display = 'none';
-}
+document.body.addEventListener('click', (event) => {
+    const tooltip = element.getElementById('tooltip');
+    const isClickInsideTooltip = tooltip.contains(event.target);
+    if (!isClickInsideTooltip) {
+        tooltip.style.display = 'none';
+    }
+});

@@ -25,11 +25,13 @@ td:hover {
     cursor: pointer;
 }
 
-.tooltip {
+.svn-tooltip {
     position: absolute;
     display: none;
-    background-color: #fff;
+    background-color: lightgrey;
     border: 1px solid #ccc;
     padding: 5px;
     font-size: 14px;
+    color: black;
+    z-index: 9999;
 }
