@@ -19,40 +19,21 @@ public class BoardManager : IBoardManager
     /// <exception cref="InvalidOperationException">Throws when the maximum of animals is reached.</exception>
     public void AddAnimal(Type animalType)
     {
-        var possibleMoves = GetPossibleMoves();
+        var emptyPositions = GetEmptyPositions();
 
-        if (possibleMoves.Count == 0)
+        if (emptyPositions.Count == 0)
         {
             return;
         }
 
+        int randomPositionIndex = _random.Next(0, emptyPositions.Count);
+        Position randomPosition = emptyPositions[randomPositionIndex];
         var animal = AnimalFactory.InitializeAnimal(animalType);
 
-        Position position = GenerateRandomPosition();
-        animal.Position = position;
+        animal.Position = randomPosition;
+        Animals.Add(animal);
 
-        bool intersects = Animals.Exists(a => a.Position.X == position.X &&
-                          a.Position.Y == position.Y);
-
-        if (!intersects)
-        {
-            Animals.Add(animal);
-        }
-        else
-        {
-            AddAnimal(animalType);
-        }
-    }
-
-    /// <summary>
-    /// Generates random position on the board.
-    /// </summary>
-    /// <returns>Random position</returns>
-    private Position GenerateRandomPosition()
-    {
-        int randomX = _random.Next(0, Constants.MaxX);
-        int randomY = _random.Next(0, Constants.MaxY);
-        return new Position(randomX, randomY);
+        return;
     }
 
     /// <summary>
@@ -95,10 +76,10 @@ public class BoardManager : IBoardManager
     }
 
     /// <summary>
-    /// Gets a list of all possible moves on the board.
+    /// Gets a list of all empty positions for an animals to move on the board.
     /// </summary>
     /// <returns>List of available positions.</returns>
-    private List<Position> GetPossibleMoves()
+    private List<Position> GetEmptyPositions()
     {
         var occupiedPositions = Animals.Select(a => a.Position).ToList();
 
