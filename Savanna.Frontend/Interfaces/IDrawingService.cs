@@ -2,5 +2,5 @@
 
 public interface IDrawingService
 {
-    List<List<char>> GetGameBoard();
+    List<List<long?>> GetGameBoard();
 }

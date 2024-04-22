@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "Savanna Game";
     IDrawingService? uiManager = ViewData["UIManager"] as IDrawingService;
-    List<List<char>> board = uiManager?.GetGameBoard() ?? new List<List<char>>();
+    List<List<long?>> board = uiManager?.GetGameBoard() ?? new List<List<long?>>();
     var getGameBoardUrl = Url.Action("GetGameBoard", "Game");
     var handleInputUrl = Url.Action("HandleInput", "Game");
     var saveGameUrl = Url.Action("SaveGame", "Game");
@@ -45,7 +45,6 @@
         <table>
             <p><strong>Game board:</strong></p>
             <tbody id="boardBody">
-                <td class="animal-cell" data-animal-id="animalId">Animal</td>
             </tbody>
         </table>
     </div>

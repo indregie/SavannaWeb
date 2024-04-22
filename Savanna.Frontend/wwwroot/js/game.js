@@ -9,16 +9,28 @@ const updateBoard = async () => {
     }
     gameRunning = true;
     const data = await response.json();
+
+    animals = {};
+    for (const animal of data.animals) {
+        animals[animal.id] = animal;
+    }
+
     const boardBody = document.getElementById('boardBody');
     boardBody.innerHTML = '';
-    data.board.forEach((row, i) => {
+    data.board.forEach((row) => {
         const tr = document.createElement('tr');;
-        row.forEach((cell, j) => {
+        row.forEach((animalId) => {
+            let animalSymbol = "-";
+            if (animalId != null) {
+                const animal = animals[animalId];
+                animalSymbol = animal.symbol;
+            }
+
             const td = document.createElement('td');
-            td.textContent = cell;
+            td.textContent = animalSymbol;
             td.classList.add('animal-cell');
-            td.dataset.animalId = cell;
-            td.addEventListener('mouseenter', handleMouseEnter);
+            td.dataset.animalId = animalId;
+            td.addEventListener('click', animalMouseClick);
             td.addEventListener('mouseleave', handleMouseLeave);
             tr.appendChild(td);
         });
@@ -30,9 +42,6 @@ const updateBoard = async () => {
     iterationCountSpan.textContent = data.iterationCount;
     animalCountSpan.textContent = data.animals.length;
 
-    for (const a of data.animals) {
-        animals[a.Id] = a;
-    }
 }
 
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {
@@ -128,38 +137,16 @@ window.addEventListener('beforeunload', (event) => {
     if (gameRunning) {
         event.preventDefault();
         event.returnValue = '';
-        //alert('Are you sure you want to leave? Your progress will not be saved.');
     }
 });
 
-const getAnimalStats = async (animalId) => {
-    try {
-        const response = await fetch(`/Game/GetAnimalStats?animalId=${animalId}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch animal statistics');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-};
-
 //click on animal
-const handleMouseEnter = async (event) => {
+const animalMouseClick = async (event) => {
     const animalId = event.target.dataset.animalId;
-    console.log(animalId)
     const tooltip = document.getElementById('tooltip');
-    //const animalStats = await getAnimalStats(animalId);
     animal = animals[animalId];
-    //if (animalStats) {
-    //    tooltip.textContent = `${animalStats.species}. Age: ${animalStats.age}, Health: ${animalStats.health}, Offsprings ${animalStats.offsprings}`;
-    //    tooltip.style.display = 'block'; //show tooltip
-    //    tooltip.style.left = `${event.pageX}px`;
-    //    tooltip.style.top = `${event.pageY}px`;
-    //} else {
     if (animal != null) {
-        console.log('animal clicked')
+        console.log('animal clicked', animalId);
         tooltip.textContent = `${animal.species}. Age: ${animal.age}, Health: ${animal.health}, Offsprings ${animal.offsprings}`;
         tooltip.style.display = 'block'; //show tooltip
         tooltip.style.left = `${event.pageX}px`;
