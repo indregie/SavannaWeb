@@ -9,7 +9,6 @@ const updateBoard = async () => {
     }
     gameRunning = true;
     const data = await response.json();
-    console.log("responseData", data);
     const boardBody = document.getElementById('boardBody');
     boardBody.innerHTML = '';
     data.board.forEach((row, i) => {
@@ -22,7 +21,6 @@ const updateBoard = async () => {
             td.addEventListener('mouseenter', handleMouseEnter);
             td.addEventListener('mouseleave', handleMouseLeave);
             tr.appendChild(td);
-            console.log(cell);
         });
         boardBody.appendChild(tr);
     });
@@ -39,7 +37,6 @@ const updateBoard = async () => {
 
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {
     event.preventDefault();
-    console.log("listener alive");
     try {
         var animalSymbolInput = document.getElementById('animalSymbol');
         var animalSymbol = animalSymbolInput.value.toUpperCase();
@@ -53,7 +50,6 @@ document.getElementById('addAnimalButton').addEventListener('click', async (even
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        console.log("response fetched");
         animalSymbolInput.value = '';
     } catch (error) {
         console.error(error);
@@ -151,7 +147,8 @@ const getAnimalStats = async (animalId) => {
 
 //click on animal
 const handleMouseEnter = async (event) => {
-    const animalId = event.target.dataset.Id;
+    const animalId = event.target.dataset.animalId;
+    console.log(animalId)
     const tooltip = document.getElementById('tooltip');
     //const animalStats = await getAnimalStats(animalId);
     animal = animals[animalId];

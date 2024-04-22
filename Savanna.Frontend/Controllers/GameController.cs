@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -47,7 +46,7 @@ public class GameController : Controller
         {
             Console.WriteLine("User provided symbol not found");
         }
-        return Ok();   
+        return Ok();
     }
 
     [HttpGet]
@@ -55,10 +54,11 @@ public class GameController : Controller
     {
         _boardManager.MoveAnimals();
         var board = _drawingService.GetGameBoard();
-        return Json(new { 
-            iterationCount = _boardManager.IterationCount, 
-            animals = _boardManager.Animals, 
-            board = board 
+        return Json(new
+        {
+            iterationCount = _boardManager.IterationCount,
+            animals = _boardManager.Animals,
+            board = board
         });
     }
 
@@ -97,7 +97,7 @@ public class GameController : Controller
                 return StatusCode(500, "Unexpected error occured.");
             }
             var game = await _dataService.LoadGame(userId);
-            
+
             if (game == null)
             {
                 return NotFound("No game found for the user.");
@@ -119,7 +119,7 @@ public class GameController : Controller
 
             foreach (var jsonAnimal in jsonAnimals)
             {
-                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ?? 
+                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ??
                     throw new InvalidOperationException("Animal symbol is null or empty.");
                 Type? animalType = AnimalFactory.AnimalTypes[animalSymbol];
                 if (animalType == null)
