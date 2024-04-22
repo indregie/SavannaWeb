@@ -1,5 +1,6 @@
 ﻿let intervalId = null;
 let gameRunning = false;
+let animals = {};
 
 const updateBoard = async () => {
     const response = await fetch(getGameBoardUrl);
@@ -16,10 +17,10 @@ const updateBoard = async () => {
         row.forEach((cell, j) => {
             const td = document.createElement('td');
             td.textContent = cell;
-            td.addEventListener('click', () => {
-                console.log('Animal clicked:', cell)
-                //tooltip
-            });
+            td.classList.add('animal-cell');
+            td.dataset.animalId = cell;
+            td.addEventListener('mouseenter', handleMouseEnter);
+            td.addEventListener('mouseleave', handleMouseLeave);
             tr.appendChild(td);
             console.log(cell);
         });
@@ -30,6 +31,10 @@ const updateBoard = async () => {
     const animalCountSpan = document.getElementById('animalCount');
     iterationCountSpan.textContent = data.iterationCount;
     animalCountSpan.textContent = data.animals.length;
+
+    for (const a of data.animals) {
+        animals[a.Id] = a;
+    }
 }
 
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {
@@ -127,8 +132,47 @@ window.addEventListener('beforeunload', (event) => {
     if (gameRunning) {
         event.preventDefault();
         event.returnValue = '';
-        alert('Are you sure you want to leave? Your progress will not be saved.');
+        //alert('Are you sure you want to leave? Your progress will not be saved.');
     }
 });
 
+const getAnimalStats = async (animalId) => {
+    try {
+        const response = await fetch(`/Game/GetAnimalStats?animalId=${animalId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch animal statistics');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
 
+//click on animal
+const handleMouseEnter = async (event) => {
+    const animalId = event.target.dataset.Id;
+    const tooltip = document.getElementById('tooltip');
+    //const animalStats = await getAnimalStats(animalId);
+    animal = animals[animalId];
+    //if (animalStats) {
+    //    tooltip.textContent = `${animalStats.species}. Age: ${animalStats.age}, Health: ${animalStats.health}, Offsprings ${animalStats.offsprings}`;
+    //    tooltip.style.display = 'block'; //show tooltip
+    //    tooltip.style.left = `${event.pageX}px`;
+    //    tooltip.style.top = `${event.pageY}px`;
+    //} else {
+    if (animal != null) {
+        console.log('animal clicked')
+        tooltip.textContent = `${animal.species}. Age: ${animal.age}, Health: ${animal.health}, Offsprings ${animal.offsprings}`;
+        tooltip.style.display = 'block'; //show tooltip
+        tooltip.style.left = `${event.pageX}px`;
+        tooltip.style.top = `${event.pageY}px`;
+    } else {
+        tooltip.style.display = 'none';
+    }    
+}
+
+const handleMouseLeave = () => {
+    const tooltip = document.getElementById('tooltip');
+    tooltip.style.display = 'none';
+}

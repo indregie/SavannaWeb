@@ -81,6 +81,7 @@ public class BoardManager : IBoardManager
             {
                 animal.Move(this, _random);
             }
+            animal.Age++;
         }
 
         Animals = Animals.Where(a => a.Health > 0).ToList();
