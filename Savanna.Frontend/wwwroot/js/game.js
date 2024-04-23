@@ -87,7 +87,6 @@ document.getElementById('saveGameButton').addEventListener('click', async (event
 });
 
 document.getElementById('newGameButton').addEventListener('click', async () => {
-    //call new game endpoint to clear Animals list
     try {
         const response = await fetch(newGameUrl, {
             method: 'POST',
@@ -138,7 +137,6 @@ window.addEventListener('beforeunload', (event) => {
     }
 });
 
-//click on animal
 const animalMouseClick = async (event) => {
     const animalId = event.target.dataset.animalId;
     const tooltip = document.getElementById('tooltip');
