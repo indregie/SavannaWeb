@@ -1,5 +1,6 @@
 ﻿let intervalId = null;
 let gameRunning = false;
+let animals = {};
 
 const updateBoard = async () => {
     const response = await fetch(getGameBoardUrl);
@@ -8,24 +9,42 @@ const updateBoard = async () => {
     }
     gameRunning = true;
     const data = await response.json();
-    console.log("responseData", data);
+
+    animals = {};
+    for (const animal of data.animals) {
+        animals[animal.id] = animal;
+    }
+
     const boardBody = document.getElementById('boardBody');
     boardBody.innerHTML = '';
-    data.forEach((row, i) => {
+    data.board.forEach((row) => {
         const tr = document.createElement('tr');;
-        row.forEach((cell, j) => {
+        row.forEach((animalId) => {
+            let animalSymbol = "-";
+            if (animalId != null) {
+                const animal = animals[animalId];
+                animalSymbol = animal.symbol;
+            }
+
             const td = document.createElement('td');
-            td.textContent = cell;
+            td.textContent = animalSymbol;
+            td.classList.add('animal-cell');
+            td.dataset.animalId = animalId;
+            td.addEventListener('click', animalMouseClick);
             tr.appendChild(td);
-            console.log(cell);
         });
         boardBody.appendChild(tr);
     });
+
+    const iterationCountSpan = document.getElementById('iterationCount');
+    const animalCountSpan = document.getElementById('animalCount');
+    iterationCountSpan.textContent = data.iterationCount;
+    animalCountSpan.textContent = data.animals.length;
+
 }
 
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {
     event.preventDefault();
-    console.log("listener alive");
     try {
         var animalSymbolInput = document.getElementById('animalSymbol');
         var animalSymbol = animalSymbolInput.value.toUpperCase();
@@ -39,7 +58,6 @@ document.getElementById('addAnimalButton').addEventListener('click', async (even
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        console.log("response fetched");
         animalSymbolInput.value = '';
     } catch (error) {
         console.error(error);
@@ -58,7 +76,6 @@ document.getElementById('saveGameButton').addEventListener('click', async (event
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ /* data for saving the game */ })
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -70,7 +87,6 @@ document.getElementById('saveGameButton').addEventListener('click', async (event
 });
 
 document.getElementById('newGameButton').addEventListener('click', async () => {
-    //call new game endpoint to clear Animals list
     try {
         const response = await fetch(newGameUrl, {
             method: 'POST',
@@ -118,8 +134,28 @@ window.addEventListener('beforeunload', (event) => {
     if (gameRunning) {
         event.preventDefault();
         event.returnValue = '';
-        alert('Are you sure you want to leave? Your progress will not be saved.');
     }
 });
 
+const animalMouseClick = async (event) => {
+    const animalId = event.target.dataset.animalId;
+    const tooltip = document.getElementById('tooltip');
+    animal = animals[animalId];
+    if (animal != null) {
+        console.log('animal clicked', animalId, tooltip);
+        tooltip.textContent = `${animal.symbol}. Age: ${animal.age}, Health: ${animal.health}, Offsprings ${animal.offsprings}`;
+        tooltip.style.display = 'block'; //show tooltip
+        tooltip.style.left = `${event.pageX}px`;
+        tooltip.style.top = `${event.pageY}px`;
+    } else {
+        tooltip.style.display = 'none';
+    }    
+}
 
+document.body.addEventListener('click', (event) => {
+    const tooltip = element.getElementById('tooltip');
+    const isClickInsideTooltip = tooltip.contains(event.target);
+    if (!isClickInsideTooltip) {
+        tooltip.style.display = 'none';
+    }
+});

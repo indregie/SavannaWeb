@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "Savanna Game";
     IDrawingService? uiManager = ViewData["UIManager"] as IDrawingService;
-    List<List<char>> board = uiManager?.GetGameBoard() ?? new List<List<char>>();
+    List<List<long?>> board = uiManager?.GetGameBoard() ?? new List<List<long?>>();
     var getGameBoardUrl = Url.Action("GetGameBoard", "Game");
     var handleInputUrl = Url.Action("HandleInput", "Game");
     var saveGameUrl = Url.Action("SaveGame", "Game");
@@ -35,7 +35,6 @@
         <p>Enter @kvp.Key to add @kvp.Value.Name.</p>
     }
 
-    @* posts input to controller HandleInput action *@
     <form id="animalForm">
         <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
         <input id="addAnimalButton" type="submit" value="Add" />
@@ -48,9 +47,13 @@
             </tbody>
         </table>
     </div>
+    <div id="tooltip" class="svn-tooltip"></div>
+    <br>
+    <br>
+    <p><strong>Iteration count: </strong><span id="iterationCount"></span></p>
+    <p><strong>Number of animals on board: </strong><span id="animalCount"></span></p>
+    <br>
 
-    <br>
-    <br>
     <form id="saveGameForm">
         <input id="saveGameButton" type="button" class="btn btn-primary" value="Save Game" />
     </form>

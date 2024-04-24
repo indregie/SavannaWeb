@@ -12,6 +12,8 @@ public abstract class Animal
     public float Health { get; set; } = 10;
     public abstract Dictionary<long, int> SurroundingAnimals { get; set; }
     public abstract bool IsPredator { get; set; }
+    public int Age { get; set; } = 0;
+    public int Offsprings { get; set; } = 0;
 
     protected Animal()
     {
@@ -114,6 +116,7 @@ public abstract class Animal
         {
             SurroundingAnimals.Remove(kvp.Key);
             manager.BirthAnimals.Add(animalType);
+            this.Offsprings++;
         }
     }
 }

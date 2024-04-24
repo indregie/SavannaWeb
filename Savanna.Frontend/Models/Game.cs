@@ -10,4 +10,5 @@ public class Game
     public int Id { get; set; }
     public string? UserId { get; set; }
     public string? AnimalsJson { get; set; }
+    public int IterationCount { get; set; }
 }

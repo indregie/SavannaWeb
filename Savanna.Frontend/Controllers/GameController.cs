@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,28 +11,27 @@ using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
-[Authorize]
+//[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
-    private readonly IDrawingService _uiManager;
+    private readonly IDrawingService _drawingService;
     private readonly IDataService _dataService;
     private readonly UserManager<AppUser> _userManager;
 
-    public GameController(IBoardManager boardManager, IDrawingService uiManager, IDataService dataService, UserManager<AppUser> userManager)
+    public GameController(IBoardManager boardManager, IDrawingService drawingService, IDataService dataService, UserManager<AppUser> userManager)
     {
         _boardManager = boardManager;
-        _uiManager = uiManager;
+        _drawingService = drawingService;
         _dataService = dataService;
         _userManager = userManager;
     }
     public IActionResult Index()
     {
-        ViewData["UIManager"] = _uiManager;
+        ViewData["UIManager"] = _drawingService;
         return View();
     }
 
-    //invoked from view, adds animal to board and redirects to view
     [HttpPost]
     public IActionResult HandleInput([FromBody] RequestModel request)
     {
@@ -47,15 +45,20 @@ public class GameController : Controller
         {
             Console.WriteLine("User provided symbol not found");
         }
-        return Ok();   
+        return Ok();
     }
 
     [HttpGet]
     public IActionResult GetGameBoard()
     {
         _boardManager.MoveAnimals();
-        var board = _uiManager.GetGameBoard();
-        return Json(board);
+        var board = _drawingService.GetGameBoard();
+        return Json(new
+        {
+            iterationCount = _boardManager.IterationCount,
+            animals = _boardManager.Animals,
+            board = board
+        });
     }
 
     [HttpPost]
@@ -93,7 +96,7 @@ public class GameController : Controller
                 return StatusCode(500, "Unexpected error occured.");
             }
             var game = await _dataService.LoadGame(userId);
-            
+
             if (game == null)
             {
                 return NotFound("No game found for the user.");
@@ -115,7 +118,8 @@ public class GameController : Controller
 
             foreach (var jsonAnimal in jsonAnimals)
             {
-                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ?? throw new InvalidOperationException("Animal symbol is null or empty.");
+                char animalSymbol = jsonAnimal["Symbol"]?.ToString()[0] ??
+                    throw new InvalidOperationException("Animal symbol is null or empty.");
                 Type? animalType = AnimalFactory.AnimalTypes[animalSymbol];
                 if (animalType == null)
                 {

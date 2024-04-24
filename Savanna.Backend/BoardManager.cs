@@ -10,7 +10,7 @@ public class BoardManager : IBoardManager
     public List<Animal> Animals { get; set; } = new List<Animal>();
     public List<Type> BirthAnimals = new List<Type>();
     private Random _random = new Random();
-    private int _iterationCount = 0;
+    public int IterationCount { get; set; } = 0;
 
     /// <summary>
     /// Adds animal to the board.
@@ -19,40 +19,21 @@ public class BoardManager : IBoardManager
     /// <exception cref="InvalidOperationException">Throws when the maximum of animals is reached.</exception>
     public void AddAnimal(Type animalType)
     {
-        var possibleMoves = GetPossibleMoves();
+        var emptyPositions = GetEmptyPositions();
 
-        if (possibleMoves.Count == 0)
+        if (emptyPositions.Count == 0)
         {
             return;
         }
 
+        int randomPositionIndex = _random.Next(0, emptyPositions.Count);
+        Position randomPosition = emptyPositions[randomPositionIndex];
         var animal = AnimalFactory.InitializeAnimal(animalType);
 
-        Position position = GenerateRandomPosition();
-        animal.Position = position;
+        animal.Position = randomPosition;
+        Animals.Add(animal);
 
-        bool intersects = Animals.Exists(a => a.Position.X == position.X &&
-                          a.Position.Y == position.Y);
-
-        if (!intersects)
-        {
-            Animals.Add(animal);
-        }
-        else
-        {
-            AddAnimal(animalType);
-        }
-    }
-
-    /// <summary>
-    /// Generates random position on the board.
-    /// </summary>
-    /// <returns>Random position</returns>
-    private Position GenerateRandomPosition()
-    {
-        int randomX = _random.Next(0, Constants.MaxX);
-        int randomY = _random.Next(0, Constants.MaxY);
-        return new Position(randomX, randomY);
+        return;
     }
 
     /// <summary>
@@ -69,18 +50,19 @@ public class BoardManager : IBoardManager
     /// </summary>
     public void MoveAnimals()
     {
-        _iterationCount++;
+        IterationCount++;
 
         foreach (var animal in Animals)
         {
-            if (_iterationCount % 2 == 1 && !animal.IsPredator)
+            if (IterationCount % 2 == 1 && !animal.IsPredator)
             {
                 animal.Move(this, _random);
             }
-            if (_iterationCount % 2 == 0 && animal.IsPredator)
+            if (IterationCount % 2 == 0 && animal.IsPredator)
             {
                 animal.Move(this, _random);
             }
+            animal.Age++;
         }
 
         Animals = Animals.Where(a => a.Health > 0).ToList();
@@ -94,10 +76,10 @@ public class BoardManager : IBoardManager
     }
 
     /// <summary>
-    /// Gets a list of all possible moves on the board.
+    /// Gets a list of all empty positions for an animals to move on the board.
     /// </summary>
     /// <returns>List of available positions.</returns>
-    private List<Position> GetPossibleMoves()
+    private List<Position> GetEmptyPositions()
     {
         var occupiedPositions = Animals.Select(a => a.Position).ToList();
 
@@ -117,6 +99,6 @@ public class BoardManager : IBoardManager
     {
         Animals.Clear();
         BirthAnimals.Clear();
-        _iterationCount = 0;
+        IterationCount = 0;
     }
 }

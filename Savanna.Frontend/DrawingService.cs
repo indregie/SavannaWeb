@@ -14,24 +14,24 @@ public class DrawingService : IDrawingService
         _boardManager = boardManager;
     }
 
-    public List<List<char>> GetGameBoard()
+    public List<List<long?>> GetGameBoard()
     {
         List<Animal> animals = _boardManager.GetBoardAnimals();
-        List<List<char>> boardList = new List<List<char>>();
+        List<List<long?>> boardList = new List<List<long?>>();
 
         for (int i = 0; i < Constants.MaxY; i++)
         {
-            List<char> row = new List<char>();
+            List<long?> row = new List<long?>();
             for (int j = 0; j < Constants.MaxX; j++)
             {
-                row.Add('-');
+                row.Add(null); ;
             }
             boardList.Add(row);
         }
 
         foreach (var animal in animals)
         {
-            boardList[animal.Position.Y][animal.Position.X] = animal.Symbol;
+            boardList[animal.Position.Y][animal.Position.X] = animal.Id;
         }
 
         return boardList;

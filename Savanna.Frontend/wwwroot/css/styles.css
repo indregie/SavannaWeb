@@ -19,3 +19,19 @@
     border: 1px solid #ccc;
     padding: 10px;
 }
+
+td:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.svn-tooltip {
+    position: absolute;
+    display: none;
+    background-color: lightgrey;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+    color: black;
+    z-index: 9999;
+}
