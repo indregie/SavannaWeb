@@ -1,7 +1,8 @@
 ﻿using Savanna.Backend;
-using Savanna.Frontend;
+using Savanna.Backend.Interfaces;
+using Savanna.ConsoleApp;
 
-BoardManager _boardManager = new BoardManager();
+IBoardManager _boardManager = new BoardManager();
 UIManager _uiManager = new UIManager(_boardManager);
 
 Console.WriteLine("Welcome to Savanna!");

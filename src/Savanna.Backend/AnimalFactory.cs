@@ -19,7 +19,8 @@ public static class AnimalFactory
     /// </summary>
     private static void LoadAnimalTypes()
     {
-        string pluginsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins");
+        string solutionDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
+        string pluginsDirectory = Path.Combine(solutionDirectory, "SharedItems", "Plugins");
         string[] pluginFiles = Directory.GetFiles(pluginsDirectory, "*.dll");
 
         foreach (string pluginFile in pluginFiles)

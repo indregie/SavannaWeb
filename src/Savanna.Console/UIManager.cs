@@ -1,15 +1,16 @@
 ﻿using Savanna.Backend;
 using Savanna.Backend.Actors;
+using Savanna.Backend.Interfaces;
 
-namespace Savanna.Frontend;
+namespace Savanna.ConsoleApp;
 
 /// <summary>
 /// Manages the user interface for displaying the game board.
 /// </summary>
 public class UIManager
 {
-    private BoardManager _boardManager;
-    public UIManager(BoardManager boardManager)
+    private IBoardManager _boardManager;
+    public UIManager(IBoardManager boardManager)
     {
         _boardManager = boardManager;
     }
