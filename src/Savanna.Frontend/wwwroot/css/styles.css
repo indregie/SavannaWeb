@@ -35,3 +35,8 @@ td:hover {
     color: black;
     z-index: 9999;
 }
+
+.svn-container {
+    display: flex;
+    justify-content: flex-start;
+}

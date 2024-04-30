@@ -50,8 +50,11 @@ public class BoardManager : IBoardManager
     /// </summary>
     public void MoveAnimals()
     {
-        IterationCount++;
-
+        if (Animals.Count > 0)
+        {
+            IterationCount++;
+        }
+        
         foreach (var animal in Animals)
         {
             if (IterationCount % 2 == 1 && !animal.IsPredator)

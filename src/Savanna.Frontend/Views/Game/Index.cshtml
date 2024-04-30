@@ -36,10 +36,19 @@
     }
 
     <form id="animalForm">
-        <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" />
-        <input id="addAnimalButton" type="submit" value="Add" />
+        <div class="svn-container">
+            <input id="animalSymbol" type="text" name="animalSymbol" maxlength="1" class="form-control" />
+            <input id="addAnimalButton" type="submit" value="Add" class="btn btn-outline-primary" />
+        </div>
+
     </form>
     <br>
+    <div class="btn-group">
+        <button type="button" id="displayIconButton" class="btn btn-outline-primary">Icons</button>
+        <button type="button" id="displayLetterButton" class="btn btn-outline-primary">Letters</button>
+    </div>
+    <br>
+    <br />
     <div id="game-board" class="game-board">
         <table>
             <p><strong>Game board:</strong></p>
