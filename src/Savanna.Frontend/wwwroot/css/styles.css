@@ -39,4 +39,14 @@ td:hover {
 .svn-container {
     display: flex;
     justify-content: flex-start;
+    width: 30%;
+}
+
+.svn-container .form-control {
+    width: 50%;
+    margin-right: 10px;
+}
+
+.svn-container .btn {
+    width: 20%;
 }
