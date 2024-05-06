@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,7 +12,7 @@ using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
-//[Authorize]
+[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
@@ -68,6 +69,7 @@ public class GameController : Controller
         {
             var animals = _boardManager.GetBoardAnimals();
             var animalsJson = JsonConvert.SerializeObject(animals);
+            var iterationCount = _boardManager.IterationCount;
             var game = new Game();
             game.AnimalsJson = animalsJson;
             var userId = _userManager.GetUserId(User);
@@ -75,7 +77,7 @@ public class GameController : Controller
             {
                 return StatusCode(500, "Unexpected error occured.");
             }
-            await _dataService.SaveGame(userId, animalsJson);
+            await _dataService.SaveGame(userId, animalsJson, iterationCount);
             return Ok();
         }
         catch (Exception ex)
@@ -132,6 +134,7 @@ public class GameController : Controller
                     _boardManager.Animals.Add(animal);
                 }
             }
+            _boardManager.IterationCount = game.IterationCount;
             return Ok();
 
         }

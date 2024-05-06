@@ -5,6 +5,6 @@ namespace Savanna.Frontend.Interfaces
     public interface IDataService
     {
         Task<Game?> LoadGame(string userId);
-        Task SaveGame(string userId, string gameJson);
+        Task SaveGame(string userId, string gameJson, int iterationCount);
     }
 }

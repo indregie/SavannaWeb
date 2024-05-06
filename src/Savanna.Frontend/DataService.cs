@@ -20,20 +20,22 @@ public class DataService : IDataService
     /// <param name="userId">The ID of the logged in user.</param>
     /// <param name="gameJson">The serialized JSON string representing the game state.</param>
     /// <returns></returns>
-    public async Task SaveGame(string userId, string gameJson)
+    public async Task SaveGame(string userId, string gameJson, int iterationCount)
     {
         var existingGame = _dbContext.Games.FirstOrDefault(x => x.UserId == userId);
 
         if (existingGame != null)
         {
             existingGame.AnimalsJson = gameJson;
+            existingGame.IterationCount = iterationCount;
         }
         else
         {
             Game game = new Game()
             {
                 UserId = userId,
-                AnimalsJson = gameJson
+                AnimalsJson = gameJson,
+                IterationCount = iterationCount
             };
 
             _dbContext.Games.Add(game);
@@ -41,6 +43,7 @@ public class DataService : IDataService
 
         await _dbContext.SaveChangesAsync();
     }
+
     /// <summary>
     /// Loads the game data from the database for the specified user.
     /// </summary>

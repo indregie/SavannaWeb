@@ -13,8 +13,6 @@ public abstract class Animal
     public abstract bool IsPredator { get; set; }
     public int Age { get; set; } = 0;
     public int Offsprings { get; set; } = 0;
-    //public virtual char Icon => '?';
-    //public virtual char Letter => '?';
     public abstract char Symbol { get; }
 
     protected Animal()

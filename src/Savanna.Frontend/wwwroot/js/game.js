@@ -4,17 +4,6 @@ let animals = {};
 let displayIcons = false;
 
 const updateBoard = async () => {
-    updateBoardIcons();
-    return;
-    if (displayIcons) {
-        updateBoardIcons();
-    } else {
-        updateBoardLetters();
-    }
-}
-
-const updateBoardLetters = async () => {
-
     const response = await fetch(getGameBoardUrl);
     if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -29,6 +18,20 @@ const updateBoardLetters = async () => {
 
     const boardBody = document.getElementById('boardBody');
     boardBody.innerHTML = '';
+
+    if (displayIcons) {
+        updateBoardIcons(data, animals);
+    } else {
+        updateBoardLetters(data, animals);
+    }
+
+    const iterationCountSpan = document.getElementById('iterationCount');
+    const animalCountSpan = document.getElementById('animalCount');
+    iterationCountSpan.textContent = data.iterationCount;
+    animalCountSpan.textContent = data.animals.length;
+}
+
+const updateBoardLetters = async (data, animals) => {
     data.board.forEach((row) => {
         const tr = document.createElement('tr');;
         row.forEach((animalId) => {
@@ -46,35 +49,17 @@ const updateBoardLetters = async () => {
         });
         boardBody.appendChild(tr);
     });
-
     const iterationCountSpan = document.getElementById('iterationCount');
     const animalCountSpan = document.getElementById('animalCount');
     iterationCountSpan.textContent = data.iterationCount;
     animalCountSpan.textContent = data.animals.length;
 
 }
-const updateBoardIcons = async () => {
-
-    const response = await fetch(getGameBoardUrl);
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    gameRunning = true;
-    const data = await response.json();
-
-    animals = {};
-    for (const animal of data.animals) {
-        animals[animal.id] = animal;
-    }
-
-    const boardBody = document.getElementById('boardBody');
-    boardBody.innerHTML = '';
+const updateBoardIcons = async (data, animals) => {
     data.board.forEach((row) => {
         const tr = document.createElement('tr');;
         row.forEach((animalId) => {
-            const td = document.createElement('td');
-
-            
+            const td = document.createElement('td');          
             if (animalId != null) {
                 const animal = animals[animalId];
                 const animalSymbol = animal.symbol;
@@ -84,10 +69,7 @@ const updateBoardIcons = async () => {
                 td.appendChild(animalIcon);
             } else {
                 td.textContent = "-";
-            }
-
-            
-            
+            }          
             td.classList.add('animal-cell');
             td.dataset.animalId = animalId;
             td.addEventListener('click', animalMouseClick);
@@ -95,13 +77,8 @@ const updateBoardIcons = async () => {
         });
         boardBody.appendChild(tr);
     });
-
-    const iterationCountSpan = document.getElementById('iterationCount');
-    const animalCountSpan = document.getElementById('animalCount');
-    iterationCountSpan.textContent = data.iterationCount;
-    animalCountSpan.textContent = data.animals.length;
-
 }
+
 document.getElementById('addAnimalButton').addEventListener('click', async (event) => {
     event.preventDefault();
     try {
@@ -217,4 +194,12 @@ document.body.addEventListener('click', (event) => {
     if (!isClickInsideTooltip) {
         tooltip.style.display = 'none';
     }
+});
+
+document.getElementById('displayIconButton').addEventListener('click', () => {
+    displayIcons = true;
+});
+
+document.getElementById('displayLetterButton').addEventListener('click', () => {
+    displayIcons = false;
 });
