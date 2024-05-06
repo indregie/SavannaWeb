@@ -148,7 +148,7 @@ const animalMouseClick = async (event) => {
         tooltip.style.left = `${event.pageX}px`;
         tooltip.style.top = `${event.pageY}px`;
     } else {
-        tooltip.style.display = 'none';
+        tooltip.style.display = 'none'; 
     }    
 }
 

@@ -6,7 +6,6 @@ public abstract class Animal
 {
     public long Id { get; set; }
     public static long NextId { get; set; }
-    public abstract char Symbol { get; }
     public Position Position { get; set; }
     public abstract int VisionRange { get; }
     public float Health { get; set; } = 10;
@@ -14,6 +13,9 @@ public abstract class Animal
     public abstract bool IsPredator { get; set; }
     public int Age { get; set; } = 0;
     public int Offsprings { get; set; } = 0;
+    public virtual char Icon => '?';
+    public virtual char Letter => '?';
+    public virtual char Symbol => Letter;
 
     protected Animal()
     {
