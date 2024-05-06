@@ -9,6 +9,8 @@ public static class AnimalFactory
 {
     public static readonly Dictionary<char, Type> AnimalTypes = new Dictionary<char, Type>();
 
+    public static readonly Dictionary<char, byte[]> AnimalIcons = new Dictionary<char, byte[]>();
+
     static AnimalFactory()
     {
         LoadAnimalTypes();
@@ -33,6 +35,7 @@ public static class AnimalFactory
             {
                 var animalInstance = (Animal)Activator.CreateInstance(type)!;
                 AnimalTypes[animalInstance.Symbol] = type;
+                AnimalIcons[animalInstance.Symbol] = animalInstance.GetIcon();
             }
         }
     }

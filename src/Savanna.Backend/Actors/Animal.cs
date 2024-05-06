@@ -13,9 +13,9 @@ public abstract class Animal
     public abstract bool IsPredator { get; set; }
     public int Age { get; set; } = 0;
     public int Offsprings { get; set; } = 0;
-    public virtual char Icon => '?';
-    public virtual char Letter => '?';
-    public virtual char Symbol => Letter;
+    //public virtual char Icon => '?';
+    //public virtual char Letter => '?';
+    public abstract char Symbol { get; }
 
     protected Animal()
     {
@@ -104,6 +104,12 @@ public abstract class Animal
     /// <param name="animals">The list of animals on the game board.</param>
     /// <param name="random">Random number generator.</param>
     public abstract void Move(BoardManager manager, Random random);
+
+    /// <summary>
+    /// Loads icon from Icons folder
+    /// </summary>
+    /// <returns>Array of bytes displaying an animal icon</returns>
+    public abstract byte[] GetIcon();
 
     /// <summary>
     /// Handles the birth of new animal if the number of surrounding animals of the same type is 3 or more.

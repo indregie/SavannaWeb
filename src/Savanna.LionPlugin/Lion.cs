@@ -64,5 +64,10 @@ public class Lion : Animal
 
         Birth(manager, typeof(Lion));
     }
+
+    public override byte[] GetIcon()
+    {
+        return System.IO.File.ReadAllBytes("C:\\Users\\indre.giedraityte\\source\\repos\\IndreGiedraityte_SavannaWeb\\src\\SharedItems\\Icons\\lion.png");
+    }
 }
 

@@ -156,4 +156,17 @@ public class GameController : Controller
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpGet("/animalIcon/{animalSymbol}")]
+    public IActionResult AnimalIcon([FromRoute] string animalSymbol)
+    {
+        
+        Console.WriteLine($"{animalSymbol}");
+
+        var animalSymbolCh = animalSymbol[0];
+        var imgBytes = AnimalFactory.AnimalIcons[animalSymbolCh];
+
+         //= 
+        return File(imgBytes, "image/png");
+    }
 }
