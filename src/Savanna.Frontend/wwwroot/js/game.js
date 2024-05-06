@@ -80,10 +80,13 @@ const updateBoardIcons = async () => {
                 const animalSymbol = animal.symbol;
                 const animalIcon = document.createElement("img");
                 animalIcon.src = `animalIcon/${animalSymbol}`;
+                animalIcon.classList.add('animal-icon');
                 td.appendChild(animalIcon);
             } else {
                 td.textContent = "-";
             }
+
+            
             
             td.classList.add('animal-cell');
             td.dataset.animalId = animalId;

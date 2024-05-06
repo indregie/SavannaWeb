@@ -43,23 +43,14 @@ public class Lion : Animal
             }
         }
 
-        foreach (var move in huntMoves)
+        if (huntMoves.Count > 0)
         {
-            var animalsCopy = new List<Animal>(manager.Animals);
-            foreach (var animal in animalsCopy)
-            {
-                if (!animal.IsPredator && animal.Position.Equals(move))
-                {
-                    animal.Health = 0;
-                    Health += 10;
-                    Position = move;
-
-                    return;
-                }
-            }
+            Position = MoveRandomly(huntMoves, random);
+        } else
+        {
+            Position = MoveRandomly(potentialMoves, random);
         }
-
-        Position = MoveRandomly(huntMoves, random);
+        
         Health -= 0.5f;
 
         Birth(manager, typeof(Lion));
