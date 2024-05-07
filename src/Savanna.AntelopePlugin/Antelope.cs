@@ -48,8 +48,12 @@ public class Antelope : Animal
         Birth(manager, typeof(Antelope));
     }
 
+    /// <summary>
+    /// Loads icon from Icons folder
+    /// </summary>
+    /// <returns>Array of bytes displaying an animal icon</returns>
     public override byte[] GetIcon()
     {
-        return System.IO.File.ReadAllBytes("C:\\Users\\indre.giedraityte\\source\\repos\\IndreGiedraityte_SavannaWeb\\src\\SharedItems\\Icons\\antelope.png");
+        return System.IO.File.ReadAllBytes(@"..\\SharedItems\\Icons\\antelope.png");
     }
 }
