@@ -1,13 +1,14 @@
 using Savanna.AntelopePlugin;
 using Savanna.Backend;
 using Savanna.Backend.Actors;
+using Savanna.Backend.Interfaces;
 using Savanna.LionPlugin;
 
 namespace Savanna.Tests;
 
 public class BoardManagerTests
 {
-    private readonly BoardManager _boardManager;
+    private readonly IBoardManager _boardManager;
 
     public BoardManagerTests()
     {
