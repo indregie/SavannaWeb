@@ -21,7 +21,9 @@ public static class AnimalFactory
     /// </summary>
     private static void LoadAnimalTypes()
     {
-        string solutionDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.Parent!.FullName;
+        //string solutionDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.Parent!.FullName;
+        string solutionDirectory = "C:\\Users\\indre.giedraityte\\source\\repos\\IndreGiedraityte_SavannaWeb\\src\\SharedItems\\Plugins";
+
         string pluginsDirectory = Path.Combine(solutionDirectory, "SharedItems", "Plugins");
         string[] pluginFiles = Directory.GetFiles(pluginsDirectory, "*.dll");
 
