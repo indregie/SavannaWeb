@@ -51,7 +51,7 @@ public class Lion : Animal
             Position = MoveRandomly(potentialMoves, random);
         }
         
-        Health -= 0.5f;
+        Health -= Constants.HealthDecreaser;
 
         Birth(manager, typeof(Lion));
     }
@@ -62,7 +62,7 @@ public class Lion : Animal
     /// <returns>Array of bytes displaying an animal icon</returns>
     public override byte[] GetIcon()
     {
-        return System.IO.File.ReadAllBytes(@"..\\SharedItems\\Icons\\lion.png");
+        return System.IO.File.ReadAllBytes(Constants.Path);
     }
 }
 

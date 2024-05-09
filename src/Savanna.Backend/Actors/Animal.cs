@@ -8,7 +8,7 @@ public abstract class Animal
     public static long NextId { get; set; }
     public Position Position { get; set; }
     public abstract int VisionRange { get; }
-    public float Health { get; set; } = 10;
+    public float Health { get; set; } = Constants.Health;
     public abstract Dictionary<long, int> SurroundingAnimals { get; set; }
     public abstract bool IsPredator { get; set; }
     public int Age { get; set; } = 0;

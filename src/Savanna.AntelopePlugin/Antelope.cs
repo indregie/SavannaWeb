@@ -43,7 +43,7 @@ public class Antelope : Animal
         }
 
         Position = MoveRandomly(safeMoves, random);
-        Health -= 0.5f;
+        Health -= Constants.HealthDecreaser;
 
         Birth(manager, typeof(Antelope));
     }
@@ -54,6 +54,6 @@ public class Antelope : Animal
     /// <returns>Array of bytes displaying an animal icon</returns>
     public override byte[] GetIcon()
     {
-        return System.IO.File.ReadAllBytes(@"..\\SharedItems\\Icons\\antelope.png");
+        return System.IO.File.ReadAllBytes(Constants.Path);
     }
 }

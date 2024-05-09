@@ -21,7 +21,7 @@ public static class AnimalFactory
     /// </summary>
     private static void LoadAnimalTypes()
     {
-        string solutionDirectory = @"..\\SharedItems\\Plugins\\";
+        string solutionDirectory = Constants.Path;
         string[] pluginFiles = Directory.GetFiles(solutionDirectory, "*.dll");
 
         foreach (string pluginFile in pluginFiles)
