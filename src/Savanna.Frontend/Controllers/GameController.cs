@@ -12,7 +12,7 @@ using Savanna.Frontend.Models.dto;
 
 namespace Savanna.Frontend.Controllers;
 
-//[Authorize]
+[Authorize]
 public class GameController : Controller
 {
     private readonly IBoardManager _boardManager;
